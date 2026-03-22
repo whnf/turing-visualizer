@@ -2,11 +2,9 @@
 
 An interactive visualizer for Turing machines.
 
-**[🌐 Live Demo](https://whnf.github.io/turing-visualizer/)**
+You can check it out [here](https://whnf.github.io/turing-visualizer/)
 
-> ⚠️ **Work in Progress:** This project is under active development — expect incomplete features and UI changes.
-
-## 📦 Setup
+## Quick Start
 
 ### Prerequisites
 
@@ -20,3 +18,13 @@ Clone the repository and run:
 npm install
 npm run dev
 ```
+
+## To Do
+
+- TM Examples
+- Better tape input handling
+- UI improvements
+
+## License
+
+GPLv3 © [whnf](https://github.com/whnf/) 2026

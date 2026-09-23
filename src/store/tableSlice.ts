@@ -100,16 +100,27 @@ const tokenSelectors = tokensAdapter.getSelectors(
   (state: TableState) => state.tokens,
 );
 
+function insertAt<T extends { id: ID }>(
+  state: EntityState<T, ID>,
+  entity: T,
+  index = state.ids.length,
+) {
+  state.entities[entity.id] = entity;
+  state.ids.splice(index, 0, entity.id);
+}
+
 const tableSlice = createSlice({
   name: "table",
   initialState,
   reducers: {
     addPhase: {
-      reducer(state, action: PayloadAction<Phase>) {
-        phasesAdapter.addOne(state.phases, action.payload);
+      reducer(state, action: PayloadAction<{ phase: Phase; index?: number }>) {
+        const { phase, index } = action.payload;
+
+        insertAt(state.phases, phase, index);
       },
-      prepare(name: string) {
-        return { payload: { id: nanoid(), name } };
+      prepare(name: string, index?: number) {
+        return { payload: { phase: { id: nanoid(), name }, index } };
       },
     },
     renamePhase(state, action: PayloadAction<{ id: ID; name: string }>) {
@@ -132,11 +143,13 @@ const tableSlice = createSlice({
       }
     },
     addToken: {
-      reducer(state, action: PayloadAction<Token>) {
-        tokensAdapter.addOne(state.tokens, action.payload);
+      reducer(state, action: PayloadAction<{ token: Token; index?: number }>) {
+        const { token, index } = action.payload;
+
+        insertAt(state.tokens, token, index);
       },
-      prepare(name: string) {
-        return { payload: { id: nanoid(), name } };
+      prepare(name: string, index?: number) {
+        return { payload: { token: { id: nanoid(), name }, index } };
       },
     },
     renameToken(state, action: PayloadAction<{ id: ID; name: string }>) {

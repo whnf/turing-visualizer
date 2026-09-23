@@ -20,6 +20,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Slider } from "@/components/ui/slider";
+import {
+  ScrollArea,
+  ScrollAreaContent,
+  ScrollAreaScrollbar,
+  ScrollAreaViewport,
+} from "@/components/ui/scroll-area";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 import { TransitionTable } from "@/components/TransitionTable";
@@ -79,12 +85,23 @@ function Machine() {
           </div>
         </CardFooter>
       </Card>
-      <Card className="pb-0">
-        <CardHeader>
+      <Card className="p-0 gap-2 overflow-visible">
+        <CardHeader className="p-4">
           <CardTitle>Transition function</CardTitle>
         </CardHeader>
-        <CardContent className="p-0 overflow-x-auto">
-          <TransitionTable />
+        <CardContent className="p-0">
+          <ScrollArea>
+            <ScrollAreaScrollbar
+              orientation="horizontal"
+              keepMounted
+              className="bottom-full!"
+            />
+            <ScrollAreaViewport className="pb-3 -mb-3 isolate">
+              <ScrollAreaContent>
+                <TransitionTable />
+              </ScrollAreaContent>
+            </ScrollAreaViewport>
+          </ScrollArea>
         </CardContent>
       </Card>
     </div>

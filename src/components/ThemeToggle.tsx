@@ -50,7 +50,9 @@ export function ThemeToggle() {
 
       try {
         localStorage.setItem(STORAGE_KEY, next);
-      } catch {}
+      } catch (error) {
+        console.warn("Could not save theme preference", error);
+      }
 
       return next;
     });

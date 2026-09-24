@@ -85,7 +85,7 @@ function Machine() {
           </div>
         </CardFooter>
       </Card>
-      <Card className="p-0 gap-2 overflow-visible">
+      <Card className="p-0 gap-0 has-data-has-overflow-x:gap-2 overflow-visible">
         <CardHeader className="p-4">
           <CardTitle>Transition function</CardTitle>
         </CardHeader>
@@ -93,7 +93,6 @@ function Machine() {
           <ScrollArea>
             <ScrollAreaScrollbar
               orientation="horizontal"
-              keepMounted
               className="bottom-full!"
             />
             <ScrollAreaViewport className="pb-3 -mb-3 isolate">

@@ -1,23 +1,38 @@
-import { Input } from "@/components/ui/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { Badge } from "@/components/ui/badge";
 
 import { useAppDispatch } from "@/store/hooks";
 import {
+  type ID,
   type Phase,
   type Token,
+  BLANK_ID,
+  INITIAL_ID,
   renamePhase,
   renameToken,
 } from "@/store/tableSlice";
 import { PhaseInsert, TokenInsert } from "@/components/InsertButton";
+import { PhaseDelete, TokenDelete } from "@/components/DeleteButton";
 
 function NameInput({
   entity,
   index,
+  fixedId,
+  fixedLabel,
   renameAction,
+  DeleteButton,
   InsertButton,
 }: {
   entity: Phase | Token;
   index: number;
+  fixedId: ID;
+  fixedLabel: string;
   renameAction: typeof renamePhase | typeof renameToken;
+  DeleteButton: typeof PhaseDelete | typeof TokenDelete;
   InsertButton: typeof PhaseInsert | typeof TokenInsert;
 }) {
   const dispatch = useAppDispatch();
@@ -27,15 +42,24 @@ function NameInput({
   };
 
   return (
-    <div className="h-full relative">
-      <Input
+    <InputGroup className="h-full">
+      <InputGroupInput
         key={entity.name}
         defaultValue={entity.name}
         onBlur={handleBlur}
-        className="h-full text-center"
+        className="h-full"
       />
+      <InputGroupAddon align="inline-end" className="pr-3 has-[>button]:mr-0">
+        {entity.id === fixedId ? (
+          <Badge className="h-4 rounded-full px-1.5 text-[10px]">
+            {fixedLabel}
+          </Badge>
+        ) : (
+          <DeleteButton id={entity.id} />
+        )}
+      </InputGroupAddon>
       <InsertButton index={index} />
-    </div>
+    </InputGroup>
   );
 }
 
@@ -50,7 +74,10 @@ export function PhaseNameInput({
     <NameInput
       entity={phase}
       index={index}
+      fixedId={INITIAL_ID}
+      fixedLabel="Initial"
       renameAction={renamePhase}
+      DeleteButton={PhaseDelete}
       InsertButton={PhaseInsert}
     />
   );
@@ -67,7 +94,10 @@ export function TokenNameInput({
     <NameInput
       entity={token}
       index={index}
+      fixedId={BLANK_ID}
+      fixedLabel="Blank"
       renameAction={renameToken}
+      DeleteButton={TokenDelete}
       InsertButton={TokenInsert}
     />
   );

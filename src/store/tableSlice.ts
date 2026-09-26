@@ -3,6 +3,9 @@ import type { EntityState, PayloadAction } from "@reduxjs/toolkit";
 
 export type ID = string;
 
+export const INITIAL_ID: ID = "initial";
+export const BLANK_ID: ID = "blank";
+
 export type Phase = {
   id: ID;
   name: string;
@@ -31,7 +34,7 @@ const phasesAdapter = createEntityAdapter<Phase>();
 const tokensAdapter = createEntityAdapter<Token>();
 
 const initialPhases: Phase[] = [
-  { id: "q0", name: "q0" },
+  { id: INITIAL_ID, name: "q0" },
   { id: "q1", name: "q1" },
   { id: "q2", name: "q2" },
   { id: "q3", name: "q3" },
@@ -42,48 +45,48 @@ const initialPhases: Phase[] = [
 ];
 
 const initialTokens: Token[] = [
+  { id: BLANK_ID, name: "\u2423" },
   { id: "t0", name: "0" },
   { id: "t1", name: "1" },
   { id: "tx", name: "X" },
-  { id: "tb", name: "\u2423" },
 ];
 
 const initialTransitions: Record<ID, Record<ID, Transition>> = {
-  q0: {
+  [INITIAL_ID]: {
+    [BLANK_ID]: { nextPhaseId: "qa", nextTokenId: BLANK_ID, move: "S" },
     t0: { nextPhaseId: "q1", nextTokenId: "tx", move: "R" },
     t1: { nextPhaseId: "q2", nextTokenId: "tx", move: "R" },
     tx: { nextPhaseId: "qa", nextTokenId: "tx", move: "S" },
-    tb: { nextPhaseId: "qa", nextTokenId: "tb", move: "S" },
   },
   q1: {
+    [BLANK_ID]: { nextPhaseId: "q3", nextTokenId: BLANK_ID, move: "L" },
     t0: { nextPhaseId: "q1", nextTokenId: "t0", move: "R" },
     t1: { nextPhaseId: "q1", nextTokenId: "t1", move: "R" },
     tx: { nextPhaseId: "q3", nextTokenId: "tx", move: "L" },
-    tb: { nextPhaseId: "q3", nextTokenId: "tb", move: "L" },
   },
   q2: {
+    [BLANK_ID]: { nextPhaseId: "q4", nextTokenId: BLANK_ID, move: "L" },
     t0: { nextPhaseId: "q2", nextTokenId: "t0", move: "R" },
     t1: { nextPhaseId: "q2", nextTokenId: "t1", move: "R" },
     tx: { nextPhaseId: "q4", nextTokenId: "tx", move: "L" },
-    tb: { nextPhaseId: "q4", nextTokenId: "tb", move: "L" },
   },
   q3: {
+    [BLANK_ID]: { nextPhaseId: "qa", nextTokenId: BLANK_ID, move: "S" },
     t0: { nextPhaseId: "q5", nextTokenId: "tx", move: "L" },
     t1: { nextPhaseId: "qr", nextTokenId: "t1", move: "S" },
     tx: { nextPhaseId: "qa", nextTokenId: "tx", move: "S" },
-    tb: { nextPhaseId: "qa", nextTokenId: "tb", move: "S" },
   },
   q4: {
+    [BLANK_ID]: { nextPhaseId: "qa", nextTokenId: BLANK_ID, move: "S" },
     t0: { nextPhaseId: "qr", nextTokenId: "t0", move: "S" },
     t1: { nextPhaseId: "q5", nextTokenId: "tx", move: "L" },
     tx: { nextPhaseId: "qa", nextTokenId: "tx", move: "S" },
-    tb: { nextPhaseId: "qa", nextTokenId: "tb", move: "S" },
   },
   q5: {
+    [BLANK_ID]: { nextPhaseId: INITIAL_ID, nextTokenId: BLANK_ID, move: "R" },
     t0: { nextPhaseId: "q5", nextTokenId: "t0", move: "L" },
     t1: { nextPhaseId: "q5", nextTokenId: "t1", move: "L" },
-    tx: { nextPhaseId: "q0", nextTokenId: "tx", move: "R" },
-    tb: { nextPhaseId: "q0", nextTokenId: "tb", move: "R" },
+    tx: { nextPhaseId: INITIAL_ID, nextTokenId: "tx", move: "R" },
   },
 };
 
@@ -106,7 +109,8 @@ function insertAt<T extends { id: ID }>(
   index = state.ids.length,
 ) {
   state.entities[entity.id] = entity;
-  state.ids.splice(index, 0, entity.id);
+  // Index 0 is reserved for the initial phase / blank token.
+  state.ids.splice(Math.max(index, 1), 0, entity.id);
 }
 
 const tableSlice = createSlice({
@@ -130,6 +134,10 @@ const tableSlice = createSlice({
     },
     removePhase(state, action: PayloadAction<ID>) {
       const id = action.payload;
+
+      if (id === INITIAL_ID) {
+        return;
+      }
 
       phasesAdapter.removeOne(state.phases, id);
       delete state.transitions[id];
@@ -159,6 +167,10 @@ const tableSlice = createSlice({
     },
     removeToken(state, action: PayloadAction<ID>) {
       const id = action.payload;
+
+      if (id === BLANK_ID) {
+        return;
+      }
 
       tokensAdapter.removeOne(state.tokens, id);
       for (const row of Object.values(state.transitions)) {

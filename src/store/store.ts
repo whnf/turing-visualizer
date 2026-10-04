@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import tableReducer from "@/store/tableSlice";
+import tapeReducer from "@/store/tapeSlice";
 
 export const store = configureStore({
   reducer: {
     table: tableReducer,
+    tape: tapeReducer,
   },
 });
 

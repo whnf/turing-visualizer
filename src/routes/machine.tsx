@@ -1,13 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  ArrowDown,
-  ArrowLeft,
-  ArrowLeftToLine,
-  ArrowRightToLine,
-  ArrowUp,
-  Play,
-  RotateCcw,
-} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,10 +11,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ButtonGroup } from "@/components/ui/button-group";
-import { Slider } from "@/components/ui/slider";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
+import { Controls } from "@/components/Controls";
+import { Tape } from "@/components/Tape";
 import { TransitionTable } from "@/components/TransitionTable";
 import { AppendPhase, AppendToken } from "@/components/AppendButton";
 
@@ -42,43 +34,11 @@ function Machine() {
         <CardHeader className="border-b">
           <CardTitle>Tape</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col items-center gap-2">
-          <ArrowDown className="stroke-1" />
-          <div className="flex gap-2 overflow-x-hidden">
-            {Array(100)
-              .fill(0)
-              .map((_, i) => (
-                <div
-                  key={i}
-                  className="min-w-15 h-12 border flex items-center justify-center"
-                >
-                  _
-                </div>
-              ))}
-          </div>
-          <ArrowUp className="stroke-1" />
+        <CardContent className="px-0">
+          <Tape />
         </CardContent>
-        <CardFooter className="flex justify-between">
-          <div className="flex-1">
-            <Button variant="outline">
-              <RotateCcw />
-              Reset
-            </Button>
-          </div>
-          <ButtonGroup className="flex-1 flex justify-center">
-            <Button disabled>
-              <ArrowLeftToLine /> Back
-            </Button>
-            <Button>
-              Step <ArrowRightToLine />
-            </Button>
-            <Button variant="outline">
-              <Play /> Run
-            </Button>
-          </ButtonGroup>
-          <div className="flex-1 flex justify-end">
-            <Slider defaultValue={1} max={10} step={1} className="max-w-32" />
-          </div>
+        <CardFooter>
+          <Controls />
         </CardFooter>
       </Card>
       <Card className="p-0 gap-0">

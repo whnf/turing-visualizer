@@ -1,0 +1,106 @@
+import { createSlice, current, type PayloadAction } from "@reduxjs/toolkit";
+
+import {
+  type ID,
+  type Transition,
+  BLANK_ID,
+  INITIAL_ID,
+  removeToken,
+} from "@/store/tableSlice";
+
+export type Run = {
+  cells: Record<number, ID>;
+  head: number;
+  phaseId: ID;
+};
+
+export type TapeState = {
+  past: Run[];
+  present: Run;
+};
+
+const initialState: TapeState = {
+  past: [],
+  present: {
+    cells: { 0: "t0", 1: "t1", 2: "t1", 3: "t0" },
+    head: 0,
+    phaseId: INITIAL_ID,
+  },
+};
+
+const tapeSlice = createSlice({
+  name: "tape",
+  initialState,
+  reducers: {
+    writeInput(state, action: PayloadAction<ID>) {
+      if (state.past.length > 0) {
+        return;
+      }
+
+      if (action.payload === BLANK_ID) {
+        delete state.present.cells[state.present.head];
+      } else {
+        state.present.cells[state.present.head] = action.payload;
+      }
+    },
+    moveHead(state, action: PayloadAction<number>) {
+      if (state.past.length > 0) {
+        return;
+      }
+
+      state.present.head = action.payload;
+    },
+    step(state, action: PayloadAction<Transition>) {
+      const { nextPhaseId, nextTokenId, move } = action.payload;
+
+      if (!nextPhaseId) {
+        return;
+      }
+
+      state.past.push(current(state.present));
+
+      if (nextTokenId) {
+        if (nextTokenId === BLANK_ID) {
+          delete state.present.cells[state.present.head];
+        } else {
+          state.present.cells[state.present.head] = nextTokenId;
+        }
+      }
+
+      state.present.head += { L: -1, S: 0, R: 1 }[move];
+      state.present.phaseId = nextPhaseId;
+    },
+    back(state) {
+      const previous = state.past.pop();
+
+      if (previous) {
+        state.present = previous;
+      }
+    },
+    reset(state) {
+      state.present = state.past[0] ?? state.present;
+      state.past = [];
+    },
+  },
+  extraReducers: (builder) =>
+    builder.addCase(removeToken, (state, action) => {
+      for (const { cells } of [state.present, ...state.past]) {
+        for (const [index, id] of Object.entries(cells)) {
+          if (id === action.payload) {
+            delete cells[Number(index)];
+          }
+        }
+      }
+    }),
+  selectors: {
+    selectPhaseId: (state) => state.present.phaseId,
+    selectTokenId: (state) =>
+      state.present.cells[state.present.head] ?? BLANK_ID,
+  },
+});
+
+export const { writeInput, moveHead, step, back, reset } = tapeSlice.actions;
+
+export const { selectPhaseId, selectTokenId } = tapeSlice.selectors;
+
+export default tapeSlice.reducer;

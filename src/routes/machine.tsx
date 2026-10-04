@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardAction,
   CardContent,
   CardFooter,
   CardHeader,
@@ -20,15 +21,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Slider } from "@/components/ui/slider";
-import {
-  ScrollArea,
-  ScrollAreaContent,
-  ScrollAreaScrollbar,
-  ScrollAreaViewport,
-} from "@/components/ui/scroll-area";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 import { TransitionTable } from "@/components/TransitionTable";
+import { AppendPhase, AppendToken } from "@/components/AppendButton";
 
 function Machine() {
   return (
@@ -85,22 +81,16 @@ function Machine() {
           </div>
         </CardFooter>
       </Card>
-      <Card className="p-0 gap-0 has-data-has-overflow-x:gap-2 overflow-visible">
-        <CardHeader className="p-4">
+      <Card className="p-0 gap-0">
+        <CardHeader className="p-4 items-center">
           <CardTitle>Transition function</CardTitle>
+          <CardAction className="row-span-1 self-center flex gap-2">
+            <AppendPhase />
+            <AppendToken />
+          </CardAction>
         </CardHeader>
-        <CardContent className="p-0">
-          <ScrollArea>
-            <ScrollAreaScrollbar
-              orientation="horizontal"
-              className="bottom-full!"
-            />
-            <ScrollAreaViewport className="pb-3 -mb-3 isolate">
-              <ScrollAreaContent>
-                <TransitionTable />
-              </ScrollAreaContent>
-            </ScrollAreaViewport>
-          </ScrollArea>
+        <CardContent className="p-0 overflow-x-auto">
+          <TransitionTable />
         </CardContent>
       </Card>
     </div>

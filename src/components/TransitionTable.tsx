@@ -16,33 +16,23 @@ export function TransitionTable() {
     <table className="w-full min-w-max">
       <thead>
         <tr>
-          <th
-            className="h-10 sticky left-0 bg-card"
-            style={{ zIndex: tokens.length + 1 }}
-          >
+          <th className="h-10 sticky left-0 z-10 bg-card">
             <div className="border h-full text-muted-foreground content-center dark:bg-input/30">
               State
             </div>
           </th>
-          {tokens.map((token, index) => (
-            <th
-              key={token.id}
-              className="h-10 relative last:[anchor-name:--last-token]"
-              style={{ zIndex: tokens.length - index }}
-            >
-              <TokenNameInput token={token} index={index} />
+          {tokens.map((token) => (
+            <th key={token.id} className="h-10">
+              <TokenNameInput token={token} />
             </th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {phases.map((phase, index) => (
+        {phases.map((phase) => (
           <tr key={phase.id}>
-            <td
-              className="h-10 sticky left-0 bg-card"
-              style={{ zIndex: phases.length - index }}
-            >
-              <PhaseNameInput phase={phase} index={index} />
+            <td className="h-10 sticky left-0 bg-card">
+              <PhaseNameInput phase={phase} />
             </td>
             {tokens.map((token) => (
               <td key={token.id} className="h-10">

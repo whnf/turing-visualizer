@@ -132,17 +132,3 @@
     @apply font-mono;
   }
 }
-
-@utility anchored-to-last-token {
-  display: none;
-
-  @supports (anchor-name: --a) {
-    display: flex;
-    position: fixed;
-    position-anchor: --last-token;
-    position-visibility: anchors-visible;
-    top: anchor(top);
-    bottom: anchor(bottom);
-    right: anchor(right);
-  }
-}

@@ -103,14 +103,16 @@ const tokenSelectors = tokensAdapter.getSelectors(
   (state: TableState) => state.tokens,
 );
 
-function insertAt<T extends { id: ID }>(
+function nextFreeName<T extends { name: string }>(
   state: EntityState<T, ID>,
-  entity: T,
-  index = state.ids.length,
+  prefix: string,
 ) {
-  state.entities[entity.id] = entity;
-  // Index 0 is reserved for the initial phase / blank token.
-  state.ids.splice(Math.max(index, 1), 0, entity.id);
+  const names = new Set(Object.values(state.entities).map((e) => e.name));
+  let n = 0;
+  while (names.has(`${prefix}${n}`)) {
+    n++;
+  }
+  return `${prefix}${n}`;
 }
 
 const tableSlice = createSlice({
@@ -118,13 +120,14 @@ const tableSlice = createSlice({
   initialState,
   reducers: {
     addPhase: {
-      reducer(state, action: PayloadAction<{ phase: Phase; index?: number }>) {
-        const { phase, index } = action.payload;
-
-        insertAt(state.phases, phase, index);
+      reducer(state, action: PayloadAction<ID>) {
+        phasesAdapter.addOne(state.phases, {
+          id: action.payload,
+          name: nextFreeName(state.phases, "q"),
+        });
       },
-      prepare(name: string, index?: number) {
-        return { payload: { phase: { id: nanoid(), name }, index } };
+      prepare() {
+        return { payload: nanoid() };
       },
     },
     renamePhase(state, action: PayloadAction<{ id: ID; name: string }>) {
@@ -151,13 +154,14 @@ const tableSlice = createSlice({
       }
     },
     addToken: {
-      reducer(state, action: PayloadAction<{ token: Token; index?: number }>) {
-        const { token, index } = action.payload;
-
-        insertAt(state.tokens, token, index);
+      reducer(state, action: PayloadAction<ID>) {
+        tokensAdapter.addOne(state.tokens, {
+          id: action.payload,
+          name: nextFreeName(state.tokens, ""),
+        });
       },
-      prepare(name: string, index?: number) {
-        return { payload: { token: { id: nanoid(), name }, index } };
+      prepare() {
+        return { payload: nanoid() };
       },
     },
     renameToken(state, action: PayloadAction<{ id: ID; name: string }>) {

@@ -1,9 +1,9 @@
-import { XIcon } from "lucide-react";
+import { Trash } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { InputGroupButton } from "@/components/ui/input-group";
 
 import { useAppDispatch } from "@/store/hooks";
-import { type ID, removePhase, removeToken } from "@/store/tableSlice";
+import { removePhase, removeToken, type ID } from "@/store/tableSlice";
 
 function DeleteButton({
   id,
@@ -14,25 +14,21 @@ function DeleteButton({
 }) {
   const dispatch = useAppDispatch();
 
-  const handleDelete = () => {
+  const handleClick = () => {
     dispatch(deleteAction(id));
   };
 
   return (
-    <Button
-      size="icon-xs"
-      onClick={handleDelete}
-      className="size-4 rounded-full opacity-0 transition-opacity group-hover/input-group:opacity-100 focus-visible:opacity-100"
-    >
-      <XIcon />
-    </Button>
+    <InputGroupButton size="icon-xs" onClick={handleClick}>
+      <Trash />
+    </InputGroupButton>
   );
 }
 
-export function PhaseDelete({ id }: { id: ID }) {
+export function DeletePhase({ id }: { id: ID }) {
   return <DeleteButton id={id} deleteAction={removePhase} />;
 }
 
-export function TokenDelete({ id }: { id: ID }) {
+export function DeleteToken({ id }: { id: ID }) {
   return <DeleteButton id={id} deleteAction={removeToken} />;
 }

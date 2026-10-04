@@ -32,7 +32,7 @@ function Machine() {
         <Input value="Untitled Machine 1" />
         <ThemeToggle />
       </div>
-      <Card>
+      <Card className="gap-0">
         <CardHeader className="border-b grid-cols-[1fr_auto_1fr]">
           <CardTitle>Tape</CardTitle>
           <CurrentPhase />

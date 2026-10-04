@@ -19,7 +19,11 @@ function DeleteButton({
   };
 
   return (
-    <InputGroupButton size="icon-xs" onClick={handleClick}>
+    <InputGroupButton
+      size="icon-xs"
+      variant="destructive"
+      onClick={handleClick}
+    >
       <Trash />
     </InputGroupButton>
   );

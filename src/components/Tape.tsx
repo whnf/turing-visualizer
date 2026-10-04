@@ -66,9 +66,9 @@ export function Tape() {
       data-tape
       onKeyDown={handleKeyDown}
       aria-label="Tape"
-      className="group flex flex-col items-center gap-2 outline-none"
+      className="group flex flex-col items-center gap-2 py-6 transition-colors duration-250 outline-none focus:bg-muted/50"
     >
-      <ArrowDown className="stroke-1" />
+      <ArrowDown className="stroke-1 text-muted-foreground transition-colors duration-250 group-focus:text-foreground" />
       <div className="relative h-12 w-full overflow-hidden mask-x-from-[calc(100%-6rem)]">
         <div
           className="absolute left-1/2 transition-transform duration-200 ease-out"
@@ -85,7 +85,7 @@ export function Tape() {
           ))}
         </div>
       </div>
-      <ArrowUp className="stroke-1" />
+      <ArrowUp className="stroke-1 text-muted-foreground transition-colors duration-250 group-focus:text-foreground" />
     </div>
   );
 }
@@ -114,7 +114,7 @@ function Cell({
       onClick={handleClick}
       style={style}
       className={cn(
-        "absolute w-15 h-12 border flex items-center justify-center",
+        "absolute w-15 h-12 border flex items-center justify-center transition-colors duration-250",
         active && "group-focus:border-primary group-focus:bg-accent",
       )}
     >

@@ -1,9 +1,16 @@
+import { SquareDot } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 
 import { useAppSelector } from "@/store/hooks";
 
 export function TapeEditHint() {
   const canEdit = useAppSelector((state) => state.tape.past.length === 0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    document.querySelector<HTMLElement>("[data-tape]")?.focus();
+  };
 
   if (!canEdit) {
     return (
@@ -14,7 +21,8 @@ export function TapeEditHint() {
   }
 
   return (
-    <Badge className="justify-self-end">
+    <Badge className="justify-self-end" onMouseDown={handleMouseDown}>
+      <SquareDot className="mr-0.5" />
       <span className="group-has-[[data-tape]:focus]/card:hidden">
         Click to edit
       </span>

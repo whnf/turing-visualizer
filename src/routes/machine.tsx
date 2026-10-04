@@ -17,6 +17,8 @@ import { Controls } from "@/components/Controls";
 import { Tape } from "@/components/Tape";
 import { TransitionTable } from "@/components/TransitionTable";
 import { AppendPhase, AppendToken } from "@/components/AppendButton";
+import { TapeEditHint } from "@/components/TapeEditHint";
+import { CurrentPhase } from "@/components/CurrentPhase";
 
 function Machine() {
   return (
@@ -31,8 +33,10 @@ function Machine() {
         <ThemeToggle />
       </div>
       <Card>
-        <CardHeader className="border-b">
+        <CardHeader className="border-b grid-cols-[1fr_auto_1fr]">
           <CardTitle>Tape</CardTitle>
+          <CurrentPhase />
+          <TapeEditHint />
         </CardHeader>
         <CardContent className="px-0">
           <Tape />

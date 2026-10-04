@@ -63,6 +63,7 @@ export function Tape() {
   return (
     <div
       tabIndex={0}
+      data-tape
       onKeyDown={handleKeyDown}
       aria-label="Tape"
       className="group flex flex-col items-center gap-2 outline-none"

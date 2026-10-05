@@ -215,8 +215,10 @@ const tableSlice = createSlice({
   selectors: {
     selectPhases: phaseSelectors.selectAll,
     selectPhaseById: phaseSelectors.selectById,
+    selectPhaseCount: phaseSelectors.selectTotal,
     selectTokens: tokenSelectors.selectAll,
     selectTokenById: tokenSelectors.selectById,
+    selectTokenCount: tokenSelectors.selectTotal,
     selectTransitions: (state) => state.transitions,
     selectTransitionByPhaseIdAndTokenId: (state, phaseId: ID, tokenId: ID) =>
       state.transitions[phaseId]?.[tokenId],
@@ -251,8 +253,10 @@ export const {
 export const {
   selectPhases,
   selectPhaseById,
+  selectPhaseCount,
   selectTokens,
   selectTokenById,
+  selectTokenCount,
   selectTransitions,
   selectTransitionByPhaseIdAndTokenId,
   selectNextPhaseByPhaseIdAndTokenId,

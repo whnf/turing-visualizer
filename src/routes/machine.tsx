@@ -1,7 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
@@ -10,8 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 import { Controls } from "@/components/Controls";
 import { Tape } from "@/components/Tape";
@@ -19,21 +15,14 @@ import { TransitionTable } from "@/components/TransitionTable";
 import { AppendPhase, AppendToken } from "@/components/AppendButton";
 import { TapeEditHint } from "@/components/TapeEditHint";
 import { CurrentPhase } from "@/components/CurrentPhase";
+import { Toolbar } from "@/components/Toolbar";
 
 function Machine() {
   return (
-    <div className="container p-8 flex flex-col gap-4">
-      <div className="flex items-center gap-4">
-        <Link to="/">
-          <Button variant="outline">
-            <ArrowLeft /> Machines
-          </Button>
-        </Link>
-        <Input value="Untitled Machine 1" />
-        <ThemeToggle />
-      </div>
+    <div className="container flex flex-col gap-4 p-8">
+      <Toolbar />
       <Card className="gap-0">
-        <CardHeader className="border-b grid-cols-[1fr_auto_1fr]">
+        <CardHeader className="grid-cols-[1fr_auto_1fr] border-b">
           <CardTitle>Tape</CardTitle>
           <CurrentPhase />
           <TapeEditHint />
@@ -45,15 +34,15 @@ function Machine() {
           <Controls />
         </CardFooter>
       </Card>
-      <Card className="p-0 gap-0">
-        <CardHeader className="p-4 items-center">
+      <Card className="gap-0 p-0">
+        <CardHeader className="items-center p-4">
           <CardTitle>Transition function</CardTitle>
-          <CardAction className="row-span-1 self-center flex gap-2">
+          <CardAction className="row-span-1 flex gap-2 self-center">
             <AppendPhase />
             <AppendToken />
           </CardAction>
         </CardHeader>
-        <CardContent className="p-0 overflow-x-auto">
+        <CardContent className="overflow-x-auto p-0">
           <TransitionTable />
         </CardContent>
       </Card>

@@ -114,7 +114,7 @@ function Cell({
       onClick={handleClick}
       style={style}
       className={cn(
-        "absolute w-15 h-12 border flex items-center justify-center transition-colors duration-250",
+        "absolute flex h-12 w-15 items-center justify-center border transition-colors duration-250",
         active && "group-focus:border-primary group-focus:bg-accent",
       )}
     >

@@ -16,8 +16,8 @@ export function TransitionTable() {
     <table className="w-full min-w-max">
       <thead>
         <tr>
-          <th className="h-10 sticky left-0 z-10 bg-card">
-            <div className="border h-full text-muted-foreground content-center dark:bg-input/30">
+          <th className="sticky left-0 z-10 h-10 bg-card">
+            <div className="h-full content-center border text-muted-foreground dark:bg-input/30">
               State
             </div>
           </th>
@@ -31,7 +31,7 @@ export function TransitionTable() {
       <tbody>
         {phases.map((phase) => (
           <tr key={phase.id}>
-            <td className="h-10 sticky left-0 bg-card">
+            <td className="sticky left-0 h-10 bg-card">
               <PhaseNameInput phase={phase} />
             </td>
             {tokens.map((token) => (

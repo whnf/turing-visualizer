@@ -54,14 +54,14 @@ export function Controls() {
   };
 
   return (
-    <div className="w-full flex justify-between items-center">
+    <div className="flex w-full items-center justify-between">
       <div className="flex-1">
         <Button variant="outline" onClick={handleReset} disabled={!canReset}>
           <RotateCcw />
           Reset
         </Button>
       </div>
-      <ButtonGroup className="flex-1 flex justify-center">
+      <ButtonGroup className="flex flex-1 justify-center">
         <Button onClick={handleBack} disabled={!canBack}>
           <ArrowLeftToLine /> Back
         </Button>
@@ -72,7 +72,7 @@ export function Controls() {
           <Play /> Run
         </Button>
       </ButtonGroup>
-      <div className="flex-1 flex justify-end">
+      <div className="flex flex-1 justify-end">
         <Slider defaultValue={1} max={10} step={1} className="max-w-32" />
       </div>
     </div>

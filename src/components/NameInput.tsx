@@ -49,7 +49,7 @@ function NameInput({
       ) : (
         <InputGroupAddon
           align="inline-end"
-          className="opacity-0 group-hover/input-group:opacity-100 group-focus-within/input-group:opacity-100"
+          className="opacity-0 group-focus-within/input-group:opacity-100 group-hover/input-group:opacity-100"
         >
           <DeleteButton id={entity.id} />
         </InputGroupAddon>

@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+import runnerReducer from "@/store/runnerSlice";
 import tableReducer from "@/store/tableSlice";
 import tapeReducer from "@/store/tapeSlice";
 
 export const store = configureStore({
   reducer: {
+    runner: runnerReducer,
     table: tableReducer,
     tape: tapeReducer,
   },

@@ -51,7 +51,7 @@ function MachineCard({ machine }: { machine: SavedMachine }) {
         </CardDescription>
       </CardHeader>
       {machine.updatedAt > 0 && (
-        <CardFooter className="mt-auto text-muted-foreground">
+        <CardFooter className="mt-auto py-2 text-muted-foreground">
           <time
             dateTime={updatedAt.toISOString()}
             title={updatedAt.toLocaleString()}
@@ -60,7 +60,7 @@ function MachineCard({ machine }: { machine: SavedMachine }) {
           </time>
           <Button
             variant="destructive"
-            size="icon-sm"
+            size="icon-xs"
             onClick={handleDelete}
             aria-label="Delete machine"
             className="relative z-10 ml-auto opacity-0 group-focus-within/card:opacity-100 group-hover/card:opacity-100"

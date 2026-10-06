@@ -21,7 +21,11 @@ export type Token = {
   name: string;
 };
 
-export type Move = "L" | "S" | "R";
+export enum Move {
+  Left = "L",
+  Stay = "S",
+  Right = "R",
+}
 
 export type Transition = {
   nextPhaseId?: string;
@@ -157,7 +161,7 @@ const tableSlice = createSlice({
         state.transitions[phaseId][tokenId] = {
           nextPhaseId: undefined,
           nextTokenId: undefined,
-          move: "S",
+          move: Move.Stay,
         };
       }
 

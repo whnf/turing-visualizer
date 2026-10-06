@@ -11,13 +11,13 @@ import {
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
+  Move,
   selectMove,
   selectNextPhase,
   selectNextToken,
   selectPhases,
   selectTokens,
   setTransition,
-  type Move,
 } from "@/store/tableSlice";
 
 function TransitionSelect({
@@ -134,15 +134,12 @@ export function MoveButton({
   const move = useAppSelector((state) => selectMove(state, phaseId, tokenId));
 
   const handleClick = () => {
-    if (!move) {
-      return;
-    }
-
-    const nextMove = {
-      L: "S",
-      S: "R",
-      R: "L",
-    }[move] as Move;
+    const nextMoves: Record<Move, Move> = {
+      [Move.Left]: Move.Stay,
+      [Move.Stay]: Move.Right,
+      [Move.Right]: Move.Left,
+    };
+    const nextMove = nextMoves[move ?? Move.Stay];
 
     dispatch(
       setTransition({
@@ -155,7 +152,7 @@ export function MoveButton({
 
   return (
     <Button onClick={handleClick} variant="outline" className="h-full w-10">
-      {move ?? "S"}
+      {move ?? Move.Stay}
     </Button>
   );
 }

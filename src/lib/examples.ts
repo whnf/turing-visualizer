@@ -1,6 +1,6 @@
 import type { SavedMachine } from "@/lib/storage";
 
-import { BLANK, Q0 } from "@/store/tableSlice";
+import { BLANK, Move, Q0 } from "@/store/tableSlice";
 
 const blank = { id: BLANK, name: "_" };
 
@@ -30,14 +30,14 @@ export const examples: Record<string, SavedMachine> = {
     tokens: [blank, { id: "t0", name: "0" }, { id: "t1", name: "1" }],
     transitions: {
       [Q0]: {
-        [BLANK]: { nextPhaseId: "carry", nextTokenId: BLANK, move: "L" },
-        t0: { nextPhaseId: Q0, nextTokenId: "t0", move: "R" },
-        t1: { nextPhaseId: Q0, nextTokenId: "t1", move: "R" },
+        [BLANK]: { nextPhaseId: "carry", nextTokenId: BLANK, move: Move.Left },
+        t0: { nextPhaseId: Q0, nextTokenId: "t0", move: Move.Right },
+        t1: { nextPhaseId: Q0, nextTokenId: "t1", move: Move.Right },
       },
       carry: {
-        [BLANK]: { nextPhaseId: "done", nextTokenId: "t1", move: "S" },
-        t0: { nextPhaseId: "done", nextTokenId: "t1", move: "S" },
-        t1: { nextPhaseId: "carry", nextTokenId: "t0", move: "L" },
+        [BLANK]: { nextPhaseId: "done", nextTokenId: "t1", move: Move.Stay },
+        t0: { nextPhaseId: "done", nextTokenId: "t1", move: Move.Stay },
+        t1: { nextPhaseId: "carry", nextTokenId: "t0", move: Move.Left },
       },
     },
     cells: { 0: "t1", 1: "t0", 2: "t1", 3: "t1" },
@@ -57,16 +57,16 @@ export const examples: Record<string, SavedMachine> = {
     tokens: [blank, { id: "t1", name: "1" }],
     transitions: {
       [Q0]: {
-        [BLANK]: { nextPhaseId: "b", nextTokenId: "t1", move: "R" },
-        t1: { nextPhaseId: "h", nextTokenId: "t1", move: "R" },
+        [BLANK]: { nextPhaseId: "b", nextTokenId: "t1", move: Move.Right },
+        t1: { nextPhaseId: "h", nextTokenId: "t1", move: Move.Right },
       },
       b: {
-        [BLANK]: { nextPhaseId: "c", nextTokenId: BLANK, move: "R" },
-        t1: { nextPhaseId: "b", nextTokenId: "t1", move: "R" },
+        [BLANK]: { nextPhaseId: "c", nextTokenId: BLANK, move: Move.Right },
+        t1: { nextPhaseId: "b", nextTokenId: "t1", move: Move.Right },
       },
       c: {
-        [BLANK]: { nextPhaseId: "c", nextTokenId: "t1", move: "L" },
-        t1: { nextPhaseId: Q0, nextTokenId: "t1", move: "L" },
+        [BLANK]: { nextPhaseId: "c", nextTokenId: "t1", move: Move.Left },
+        t1: { nextPhaseId: Q0, nextTokenId: "t1", move: Move.Left },
       },
     },
     cells: {},
@@ -95,44 +95,44 @@ export const examples: Record<string, SavedMachine> = {
     ],
     transitions: {
       [Q0]: {
-        [BLANK]: { nextPhaseId: "qa", nextTokenId: BLANK, move: "S" },
-        t0: { nextPhaseId: "q1", nextTokenId: "tx", move: "R" },
-        t1: { nextPhaseId: "q2", nextTokenId: "tx", move: "R" },
-        tx: { nextPhaseId: "qa", nextTokenId: "tx", move: "S" },
+        [BLANK]: { nextPhaseId: "qa", nextTokenId: BLANK, move: Move.Stay },
+        t0: { nextPhaseId: "q1", nextTokenId: "tx", move: Move.Right },
+        t1: { nextPhaseId: "q2", nextTokenId: "tx", move: Move.Right },
+        tx: { nextPhaseId: "qa", nextTokenId: "tx", move: Move.Stay },
       },
       q1: {
-        [BLANK]: { nextPhaseId: "q3", nextTokenId: BLANK, move: "L" },
-        t0: { nextPhaseId: "q1", nextTokenId: "t0", move: "R" },
-        t1: { nextPhaseId: "q1", nextTokenId: "t1", move: "R" },
-        tx: { nextPhaseId: "q3", nextTokenId: "tx", move: "L" },
+        [BLANK]: { nextPhaseId: "q3", nextTokenId: BLANK, move: Move.Left },
+        t0: { nextPhaseId: "q1", nextTokenId: "t0", move: Move.Right },
+        t1: { nextPhaseId: "q1", nextTokenId: "t1", move: Move.Right },
+        tx: { nextPhaseId: "q3", nextTokenId: "tx", move: Move.Left },
       },
       q2: {
-        [BLANK]: { nextPhaseId: "q4", nextTokenId: BLANK, move: "L" },
-        t0: { nextPhaseId: "q2", nextTokenId: "t0", move: "R" },
-        t1: { nextPhaseId: "q2", nextTokenId: "t1", move: "R" },
-        tx: { nextPhaseId: "q4", nextTokenId: "tx", move: "L" },
+        [BLANK]: { nextPhaseId: "q4", nextTokenId: BLANK, move: Move.Left },
+        t0: { nextPhaseId: "q2", nextTokenId: "t0", move: Move.Right },
+        t1: { nextPhaseId: "q2", nextTokenId: "t1", move: Move.Right },
+        tx: { nextPhaseId: "q4", nextTokenId: "tx", move: Move.Left },
       },
       q3: {
-        [BLANK]: { nextPhaseId: "qa", nextTokenId: BLANK, move: "S" },
-        t0: { nextPhaseId: "q5", nextTokenId: "tx", move: "L" },
-        t1: { nextPhaseId: "qr", nextTokenId: "t1", move: "S" },
-        tx: { nextPhaseId: "qa", nextTokenId: "tx", move: "S" },
+        [BLANK]: { nextPhaseId: "qa", nextTokenId: BLANK, move: Move.Stay },
+        t0: { nextPhaseId: "q5", nextTokenId: "tx", move: Move.Left },
+        t1: { nextPhaseId: "qr", nextTokenId: "t1", move: Move.Stay },
+        tx: { nextPhaseId: "qa", nextTokenId: "tx", move: Move.Stay },
       },
       q4: {
-        [BLANK]: { nextPhaseId: "qa", nextTokenId: BLANK, move: "S" },
-        t0: { nextPhaseId: "qr", nextTokenId: "t0", move: "S" },
-        t1: { nextPhaseId: "q5", nextTokenId: "tx", move: "L" },
-        tx: { nextPhaseId: "qa", nextTokenId: "tx", move: "S" },
+        [BLANK]: { nextPhaseId: "qa", nextTokenId: BLANK, move: Move.Stay },
+        t0: { nextPhaseId: "qr", nextTokenId: "t0", move: Move.Stay },
+        t1: { nextPhaseId: "q5", nextTokenId: "tx", move: Move.Left },
+        tx: { nextPhaseId: "qa", nextTokenId: "tx", move: Move.Stay },
       },
       q5: {
         [BLANK]: {
           nextPhaseId: Q0,
           nextTokenId: BLANK,
-          move: "R",
+          move: Move.Right,
         },
-        t0: { nextPhaseId: "q5", nextTokenId: "t0", move: "L" },
-        t1: { nextPhaseId: "q5", nextTokenId: "t1", move: "L" },
-        tx: { nextPhaseId: Q0, nextTokenId: "tx", move: "R" },
+        t0: { nextPhaseId: "q5", nextTokenId: "t0", move: Move.Left },
+        t1: { nextPhaseId: "q5", nextTokenId: "t1", move: Move.Left },
+        tx: { nextPhaseId: Q0, nextTokenId: "tx", move: Move.Right },
       },
     },
     cells: { 0: "t0", 1: "t1", 2: "t1", 3: "t0" },
@@ -159,32 +159,32 @@ export const examples: Record<string, SavedMachine> = {
     ],
     transitions: {
       [Q0]: {
-        [BLANK]: { nextPhaseId: "done", nextTokenId: BLANK, move: "S" },
-        t1: { nextPhaseId: "append", nextTokenId: "tx", move: "R" },
-        ty: { nextPhaseId: "rewind", nextTokenId: "ty", move: "L" },
+        [BLANK]: { nextPhaseId: "done", nextTokenId: BLANK, move: Move.Stay },
+        t1: { nextPhaseId: "append", nextTokenId: "tx", move: Move.Right },
+        ty: { nextPhaseId: "rewind", nextTokenId: "ty", move: Move.Left },
       },
       append: {
-        [BLANK]: { nextPhaseId: "return", nextTokenId: "ty", move: "L" },
-        t1: { nextPhaseId: "append", nextTokenId: "t1", move: "R" },
-        ty: { nextPhaseId: "append", nextTokenId: "ty", move: "R" },
+        [BLANK]: { nextPhaseId: "return", nextTokenId: "ty", move: Move.Left },
+        t1: { nextPhaseId: "append", nextTokenId: "t1", move: Move.Right },
+        ty: { nextPhaseId: "append", nextTokenId: "ty", move: Move.Right },
       },
       return: {
-        t1: { nextPhaseId: "return", nextTokenId: "t1", move: "L" },
-        tx: { nextPhaseId: Q0, nextTokenId: "tx", move: "R" },
-        ty: { nextPhaseId: "return", nextTokenId: "ty", move: "L" },
+        t1: { nextPhaseId: "return", nextTokenId: "t1", move: Move.Left },
+        tx: { nextPhaseId: Q0, nextTokenId: "tx", move: Move.Right },
+        ty: { nextPhaseId: "return", nextTokenId: "ty", move: Move.Left },
       },
       rewind: {
         [BLANK]: {
           nextPhaseId: "convert",
           nextTokenId: BLANK,
-          move: "R",
+          move: Move.Right,
         },
-        tx: { nextPhaseId: "rewind", nextTokenId: "tx", move: "L" },
+        tx: { nextPhaseId: "rewind", nextTokenId: "tx", move: Move.Left },
       },
       convert: {
-        [BLANK]: { nextPhaseId: "done", nextTokenId: BLANK, move: "L" },
-        tx: { nextPhaseId: "convert", nextTokenId: "t1", move: "R" },
-        ty: { nextPhaseId: "convert", nextTokenId: "t1", move: "R" },
+        [BLANK]: { nextPhaseId: "done", nextTokenId: BLANK, move: Move.Left },
+        tx: { nextPhaseId: "convert", nextTokenId: "t1", move: Move.Right },
+        ty: { nextPhaseId: "convert", nextTokenId: "t1", move: Move.Right },
       },
     },
     cells: { 0: "t1", 1: "t1", 2: "t1" },

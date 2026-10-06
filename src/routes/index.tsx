@@ -2,14 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PlusIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
+import { MachineGrid } from "@/components/MachineGrid";
 import { StorageDebug } from "@/components/StorageDebug";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
@@ -44,49 +39,14 @@ function Home() {
             Nothing here yet. Machines you create are saved in this browser.
           </div>
         ) : (
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
-            {machines.map((machine) => (
-              <Link
-                key={machine.id}
-                to="/machine/{-$id}"
-                params={{ id: machine.id }}
-              >
-                <Card className="h-full transition-colors hover:bg-muted">
-                  <CardHeader>
-                    <CardTitle className="font-bold">
-                      {machine.title || "Untitled machine"}
-                    </CardTitle>
-                    <CardDescription>
-                      {machine.description ||
-                        `${machine.phases.length} states, ${machine.tokens.length} symbols`}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
-              </Link>
-            ))}
-          </div>
+          <MachineGrid machines={machines} />
         )}
       </section>
       <div className="flex items-center text-xs text-muted-foreground">
         EXAMPLES <Separator className="ml-2 shrink" />
       </div>
       <section className="py-6">
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
-          {Object.values(examples).map((example) => (
-            <Link
-              key={example.id}
-              to="/machine/{-$id}"
-              params={{ id: example.id }}
-            >
-              <Card className="h-full transition-colors hover:bg-muted">
-                <CardHeader>
-                  <CardTitle className="font-bold">{example.title}</CardTitle>
-                  <CardDescription>{example.description}</CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-          ))}
-        </div>
+        <MachineGrid machines={Object.values(examples)} />
       </section>
       {import.meta.env.DEV && <StorageDebug />}
     </div>

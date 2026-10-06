@@ -26,12 +26,14 @@ function TransitionSelect({
   label,
   field,
   selectNext,
+  selectAll,
 }: {
   phaseId: string;
   tokenId: string;
   label: string;
   field: "nextPhaseId" | "nextTokenId";
   selectNext: typeof selectNextPhase | typeof selectNextToken;
+  selectAll: typeof selectPhases | typeof selectTokens;
 }) {
   const dispatch = useAppDispatch();
 
@@ -54,7 +56,7 @@ function TransitionSelect({
       <SelectTrigger className="h-full! w-full">
         <SelectValue>{nextEntity?.name ?? label}</SelectValue>
       </SelectTrigger>
-      <SelectMenu label={label} selectAll={selectPhases} />
+      <SelectMenu label={label} selectAll={selectAll} />
     </Select>
   );
 }
@@ -96,6 +98,7 @@ export function NextPhaseSelect({
       label="State"
       field="nextPhaseId"
       selectNext={selectNextPhase}
+      selectAll={selectPhases}
     />
   );
 }
@@ -114,6 +117,7 @@ export function NextTokenSelect({
       label="Symbol"
       field="nextTokenId"
       selectNext={selectNextToken}
+      selectAll={selectTokens}
     />
   );
 }

@@ -1,19 +1,12 @@
 import { createSlice, current, type PayloadAction } from "@reduxjs/toolkit";
 
 import { loadMachine } from "@/store/actions";
-
-import {
-  type ID,
-  type Transition,
-  BLANK_ID,
-  INITIAL_ID,
-  removeToken,
-} from "@/store/tableSlice";
+import { BLANK, Q0, removeToken, type Transition } from "@/store/tableSlice";
 
 export type Run = {
-  cells: Record<number, ID>;
+  cells: Record<number, string>;
   head: number;
-  phaseId: ID;
+  phaseId: string;
 };
 
 export type TapeState = {
@@ -26,7 +19,7 @@ const initialState: TapeState = {
   present: {
     cells: {},
     head: 0,
-    phaseId: INITIAL_ID,
+    phaseId: Q0,
   },
 };
 
@@ -34,12 +27,12 @@ const tapeSlice = createSlice({
   name: "tape",
   initialState,
   reducers: {
-    writeInput(state, action: PayloadAction<ID>) {
+    writeInput(state, action: PayloadAction<string>) {
       if (state.past.length > 0) {
         return;
       }
 
-      if (action.payload === BLANK_ID) {
+      if (action.payload === BLANK) {
         delete state.present.cells[state.present.head];
       } else {
         state.present.cells[state.present.head] = action.payload;
@@ -62,7 +55,7 @@ const tapeSlice = createSlice({
       state.past.push(current(state.present));
 
       if (nextTokenId) {
-        if (nextTokenId === BLANK_ID) {
+        if (nextTokenId === BLANK) {
           delete state.present.cells[state.present.head];
         } else {
           state.present.cells[state.present.head] = nextTokenId;
@@ -84,13 +77,13 @@ const tapeSlice = createSlice({
       state.past = [];
     },
   },
-  extraReducers: (builder) =>
+  extraReducers: (builder) => {
     builder
       .addCase(loadMachine, (state, action) => {
         const { cells, head } = action.payload;
 
         state.past = [];
-        state.present = { cells, head, phaseId: INITIAL_ID };
+        state.present = { cells, head, phaseId: Q0 };
       })
       .addCase(removeToken, (state, action) => {
         for (const { cells } of [state.present, ...state.past]) {
@@ -100,16 +93,19 @@ const tapeSlice = createSlice({
             }
           }
         }
-      }),
+      });
+  },
   selectors: {
     selectPhaseId: (state) => state.present.phaseId,
-    selectTokenId: (state) =>
-      state.present.cells[state.present.head] ?? BLANK_ID,
+    selectTokenId: (state) => state.present.cells[state.present.head] ?? BLANK,
+    selectPresent: (state) => state.present,
+    selectStarted: (state) => state.past.length > 0,
   },
 });
 
 export const { writeInput, moveHead, step, back, reset } = tapeSlice.actions;
 
-export const { selectPhaseId, selectTokenId } = tapeSlice.selectors;
+export const { selectPhaseId, selectTokenId, selectPresent, selectStarted } =
+  tapeSlice.selectors;
 
 export default tapeSlice.reducer;

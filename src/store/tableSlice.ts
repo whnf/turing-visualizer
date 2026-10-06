@@ -1,35 +1,38 @@
-import { createEntityAdapter, createSlice, nanoid } from "@reduxjs/toolkit";
-import type { EntityState, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createEntityAdapter,
+  createSlice,
+  nanoid,
+  type EntityState,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
 
 import { loadMachine } from "@/store/actions";
 
-export type ID = string;
-
-export const INITIAL_ID: ID = "initial";
-export const BLANK_ID: ID = "blank";
+export const Q0: string = "q0";
+export const BLANK: string = "blank";
 
 export type Phase = {
-  id: ID;
+  id: string;
   name: string;
 };
 
 export type Token = {
-  id: ID;
+  id: string;
   name: string;
 };
 
 export type Move = "L" | "S" | "R";
 
 export type Transition = {
-  nextPhaseId?: ID;
-  nextTokenId?: ID;
+  nextPhaseId?: string;
+  nextTokenId?: string;
   move: Move;
 };
 
 export type TableState = {
-  phases: EntityState<Phase, ID>;
-  tokens: EntityState<Token, ID>;
-  transitions: Record<ID, Record<ID, Transition>>;
+  phases: EntityState<Phase, string>;
+  tokens: EntityState<Token, string>;
+  transitions: Record<string, Record<string, Transition>>;
 };
 
 const phasesAdapter = createEntityAdapter<Phase>();
@@ -37,10 +40,10 @@ const tokensAdapter = createEntityAdapter<Token>();
 
 const initialState: TableState = {
   phases: phasesAdapter.setAll(phasesAdapter.getInitialState(), [
-    { id: INITIAL_ID, name: "q0" },
+    { id: Q0, name: "q0" },
   ]),
   tokens: tokensAdapter.setAll(tokensAdapter.getInitialState(), [
-    { id: BLANK_ID, name: "_" },
+    { id: BLANK, name: "_" },
   ]),
   transitions: {},
 };
@@ -53,7 +56,7 @@ const tokenSelectors = tokensAdapter.getSelectors(
 );
 
 function nextFreeName<T extends { name: string }>(
-  state: EntityState<T, ID>,
+  state: EntityState<T, string>,
   prefix: string,
 ) {
   const names = new Set(Object.values(state.entities).map((e) => e.name));
@@ -69,7 +72,7 @@ const tableSlice = createSlice({
   initialState,
   reducers: {
     addPhase: {
-      reducer(state, action: PayloadAction<ID>) {
+      reducer(state, action: PayloadAction<string>) {
         phasesAdapter.addOne(state.phases, {
           id: action.payload,
           name: nextFreeName(state.phases, "q"),
@@ -79,15 +82,15 @@ const tableSlice = createSlice({
         return { payload: nanoid() };
       },
     },
-    renamePhase(state, action: PayloadAction<{ id: ID; name: string }>) {
+    renamePhase(state, action: PayloadAction<{ id: string; name: string }>) {
       const { id, name } = action.payload;
 
       phasesAdapter.updateOne(state.phases, { id, changes: { name } });
     },
-    removePhase(state, action: PayloadAction<ID>) {
+    removePhase(state, action: PayloadAction<string>) {
       const id = action.payload;
 
-      if (id === INITIAL_ID) {
+      if (id === Q0) {
         return;
       }
 
@@ -103,7 +106,7 @@ const tableSlice = createSlice({
       }
     },
     addToken: {
-      reducer(state, action: PayloadAction<ID>) {
+      reducer(state, action: PayloadAction<string>) {
         tokensAdapter.addOne(state.tokens, {
           id: action.payload,
           name: nextFreeName(state.tokens, ""),
@@ -113,15 +116,15 @@ const tableSlice = createSlice({
         return { payload: nanoid() };
       },
     },
-    renameToken(state, action: PayloadAction<{ id: ID; name: string }>) {
+    renameToken(state, action: PayloadAction<{ id: string; name: string }>) {
       const { id, name } = action.payload;
 
       tokensAdapter.updateOne(state.tokens, { id, changes: { name } });
     },
-    removeToken(state, action: PayloadAction<ID>) {
+    removeToken(state, action: PayloadAction<string>) {
       const id = action.payload;
 
-      if (id === BLANK_ID) {
+      if (id === BLANK) {
         return;
       }
 
@@ -139,8 +142,8 @@ const tableSlice = createSlice({
     setTransition(
       state,
       action: PayloadAction<{
-        phaseId: ID;
-        tokenId: ID;
+        phaseId: string;
+        tokenId: string;
         changes: Partial<Transition>;
       }>,
     ) {
@@ -161,12 +164,13 @@ const tableSlice = createSlice({
       Object.assign(state.transitions[phaseId][tokenId], changes);
     },
   },
-  extraReducers: (builder) =>
+  extraReducers: (builder) => {
     builder.addCase(loadMachine, (state, action) => {
       phasesAdapter.setAll(state.phases, action.payload.phases);
       tokensAdapter.setAll(state.tokens, action.payload.tokens);
       state.transitions = action.payload.transitions;
-    }),
+    });
+  },
   selectors: {
     selectPhases: phaseSelectors.selectAll,
     selectPhaseById: phaseSelectors.selectById,
@@ -175,21 +179,21 @@ const tableSlice = createSlice({
     selectTokenById: tokenSelectors.selectById,
     selectTokenCount: tokenSelectors.selectTotal,
     selectTransitions: (state) => state.transitions,
-    selectTransitionByPhaseIdAndTokenId: (state, phaseId: ID, tokenId: ID) =>
+    selectTransition: (state, phaseId: string, tokenId: string) =>
       state.transitions[phaseId]?.[tokenId],
-    selectNextPhaseByPhaseIdAndTokenId: (state, phaseId: ID, tokenId: ID) => {
+    selectNextPhase: (state, phaseId: string, tokenId: string) => {
       const nextPhaseId = state.transitions[phaseId]?.[tokenId]?.nextPhaseId;
       return nextPhaseId
         ? phaseSelectors.selectById(state, nextPhaseId)
         : undefined;
     },
-    selectNextTokenByPhaseIdAndTokenId: (state, phaseId: ID, tokenId: ID) => {
+    selectNextToken: (state, phaseId: string, tokenId: string) => {
       const nextTokenId = state.transitions[phaseId]?.[tokenId]?.nextTokenId;
       return nextTokenId
         ? tokenSelectors.selectById(state, nextTokenId)
         : undefined;
     },
-    selectMoveByPhaseIdAndTokenId: (state, phaseId: ID, tokenId: ID) => {
+    selectMove: (state, phaseId: string, tokenId: string) => {
       return state.transitions[phaseId]?.[tokenId]?.move;
     },
   },
@@ -213,10 +217,10 @@ export const {
   selectTokenById,
   selectTokenCount,
   selectTransitions,
-  selectTransitionByPhaseIdAndTokenId,
-  selectNextPhaseByPhaseIdAndTokenId,
-  selectNextTokenByPhaseIdAndTokenId,
-  selectMoveByPhaseIdAndTokenId,
+  selectTransition,
+  selectNextPhase,
+  selectNextToken,
+  selectMove,
 } = tableSlice.selectors;
 
 export default tableSlice.reducer;

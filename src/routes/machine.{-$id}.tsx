@@ -9,17 +9,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Controls } from "@/components/Controls";
-import { Tape } from "@/components/Tape";
-import { TransitionTable } from "@/components/TransitionTable";
 import { AppendPhase, AppendToken } from "@/components/AppendButton";
-import { TapeEditHint } from "@/components/TapeEditHint";
+import { Controls } from "@/components/Controls";
 import { CurrentPhase } from "@/components/CurrentPhase";
-import { Toolbar } from "@/components/Toolbar";
 import { StorageDebug } from "@/components/StorageDebug";
+import { Tape } from "@/components/Tape";
+import { TapeEditHint } from "@/components/TapeEditHint";
+import { Toolbar } from "@/components/Toolbar";
+import { TransitionTable } from "@/components/TransitionTable";
 
 import { blankMachine, examples } from "@/lib/examples";
 import { getMachine } from "@/lib/storage";
+
 import { loadMachine } from "@/store/actions";
 import { store } from "@/store/store";
 

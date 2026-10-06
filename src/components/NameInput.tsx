@@ -1,20 +1,20 @@
+import { Badge } from "@/components/ui/badge";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { Badge } from "@/components/ui/badge";
 
 import { DeletePhase, DeleteToken } from "@/components/DeleteButton";
 
 import { useAppDispatch } from "@/store/hooks";
 import {
-  type Phase,
-  type Token,
-  BLANK_ID,
-  INITIAL_ID,
+  BLANK,
+  Q0,
   renamePhase,
   renameToken,
+  type Phase,
+  type Token,
 } from "@/store/tableSlice";
 
 function NameInput({
@@ -64,7 +64,7 @@ export function PhaseNameInput({ phase }: { phase: Phase }) {
       entity={phase}
       renameAction={renamePhase}
       DeleteButton={DeletePhase}
-      badge={phase.id === INITIAL_ID ? "Initial" : undefined}
+      badge={phase.id === Q0 ? "Initial" : undefined}
     />
   );
 }
@@ -75,7 +75,7 @@ export function TokenNameInput({ token }: { token: Token }) {
       entity={token}
       renameAction={renameToken}
       DeleteButton={DeleteToken}
-      badge={token.id === BLANK_ID ? "Blank" : undefined}
+      badge={token.id === BLANK ? "Blank" : undefined}
     />
   );
 }

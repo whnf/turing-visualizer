@@ -3,16 +3,17 @@ import { SquareDot } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 import { useAppSelector } from "@/store/hooks";
+import { selectStarted } from "@/store/tapeSlice";
 
 export function TapeEditHint() {
-  const canEdit = useAppSelector((state) => state.tape.past.length === 0);
+  const started = useAppSelector(selectStarted);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     document.querySelector<HTMLElement>("[data-tape]")?.focus();
   };
 
-  if (!canEdit) {
+  if (started) {
     return (
       <Badge variant="outline" className="justify-self-end">
         Reset to edit

@@ -4,10 +4,11 @@ import { Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-import { useAppSelector } from "@/store/hooks";
-import { selectSavedMachine } from "@/store/selectors";
 import { blankMachine, examples } from "@/lib/examples";
 import { getMachine, saveMachine } from "@/lib/storage";
+
+import { useAppSelector } from "@/store/hooks";
+import { selectSavedMachine } from "@/store/selectors";
 
 export function SaveButton() {
   const navigate = useNavigate();

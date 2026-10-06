@@ -1,12 +1,12 @@
-import { useAppSelector } from "@/store/hooks";
-import { selectPhases, selectTokens } from "@/store/tableSlice";
 import { PhaseNameInput, TokenNameInput } from "@/components/NameInput";
-
 import {
+  MoveButton,
   NextPhaseSelect,
   NextTokenSelect,
-  MoveButton,
 } from "@/components/TransitionSelect";
+
+import { useAppSelector } from "@/store/hooks";
+import { selectPhases, selectTokens } from "@/store/tableSlice";
 
 export function TransitionTable() {
   const phases = useAppSelector(selectPhases);

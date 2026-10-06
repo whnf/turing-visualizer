@@ -10,39 +10,34 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Slider } from "@/components/ui/slider";
 
-import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { selectTransitionByPhaseIdAndTokenId } from "@/store/tableSlice";
-import {
-  step,
-  reset,
-  back,
-  selectPhaseId,
-  selectTokenId,
-} from "@/store/tapeSlice";
-import { run, setSpeed, stop } from "@/store/runnerSlice";
 import { useRunLoop } from "@/hooks/useRunLoop";
 
-export function Controls() {
-  const transition = useAppSelector((state) =>
-    selectTransitionByPhaseIdAndTokenId(
-      state,
-      selectPhaseId(state),
-      selectTokenId(state),
-    ),
-  );
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  pause,
+  run,
+  selectRunning,
+  selectSpeed,
+  setSpeed,
+} from "@/store/runnerSlice";
+import { selectCurrentTransition } from "@/store/selectors";
+import { back, reset, selectStarted, step } from "@/store/tapeSlice";
 
-  const hasHistory = useAppSelector((state) => state.tape.past.length > 0);
+export function Controls() {
+  const transition = useAppSelector(selectCurrentTransition);
+
+  const started = useAppSelector(selectStarted);
 
   const dispatch = useAppDispatch();
 
-  const canReset = hasHistory;
+  const canReset = started;
   const handleReset = () => {
     if (canReset) {
       dispatch(reset());
     }
   };
 
-  const canBack = hasHistory;
+  const canBack = started;
   const handleBack = () => {
     if (canBack) {
       dispatch(back());
@@ -63,17 +58,17 @@ export function Controls() {
     }
   };
 
-  const handleStop = () => {
-    dispatch(stop());
+  const handlePause = () => {
+    dispatch(pause());
   };
 
-  const speed = useAppSelector((state) => state.runner.speed);
+  const speed = useAppSelector(selectSpeed);
 
   const handleSpeed = (value: number | readonly number[]) => {
     dispatch(setSpeed(Array.isArray(value) ? value[0] : value));
   };
 
-  const running = useAppSelector((state) => state.runner.status === "running");
+  const running = useAppSelector(selectRunning);
 
   useRunLoop();
 
@@ -98,7 +93,7 @@ export function Controls() {
         </Button>
         <Button
           variant="outline"
-          onClick={!running ? handleRun : handleStop}
+          onClick={!running ? handleRun : handlePause}
           disabled={!canStep}
         >
           {!running ? (

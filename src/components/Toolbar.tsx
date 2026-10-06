@@ -8,14 +8,19 @@ import { SaveButton } from "@/components/SaveButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setDescription, setTitle } from "@/store/metaSlice";
+import {
+  selectDescription,
+  selectTitle,
+  setDescription,
+  setTitle,
+} from "@/store/metaSlice";
 import { selectPhaseCount, selectTokenCount } from "@/store/tableSlice";
 
 export function Toolbar() {
   const dispatch = useAppDispatch();
 
-  const title = useAppSelector((state) => state.meta.title);
-  const description = useAppSelector((state) => state.meta.description);
+  const title = useAppSelector(selectTitle);
+  const description = useAppSelector(selectDescription);
   const phaseCount = useAppSelector(selectPhaseCount);
   const tokenCount = useAppSelector(selectTokenCount);
 

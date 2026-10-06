@@ -1,14 +1,15 @@
-import { ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowDown, ArrowUp } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { BLANK, selectTokenById, selectTokens } from "@/store/tableSlice";
 import {
-  selectTokenById,
-  selectTokens,
-  BLANK_ID,
-  type ID,
-} from "@/store/tableSlice";
-import { moveHead, writeInput } from "@/store/tapeSlice";
-import { useAppSelector, useAppDispatch } from "@/store/hooks";
+  moveHead,
+  selectPresent,
+  selectStarted,
+  writeInput,
+} from "@/store/tapeSlice";
 
 const CELL = 60;
 const PITCH = CELL + 8;
@@ -17,7 +18,8 @@ const HALF = 40;
 export function Tape() {
   const tokens = useAppSelector(selectTokens);
 
-  const { present, past } = useAppSelector((s) => s.tape);
+  const present = useAppSelector(selectPresent);
+  const started = useAppSelector(selectStarted);
   const { head } = present;
 
   const dispatch = useAppDispatch();
@@ -35,11 +37,11 @@ export function Tape() {
         dispatch(moveHead(head + 1));
         break;
       case "Backspace":
-        dispatch(writeInput(BLANK_ID));
+        dispatch(writeInput(BLANK));
         break;
       case "Delete":
       case " ":
-        dispatch(writeInput(BLANK_ID));
+        dispatch(writeInput(BLANK));
         break;
       default: {
         const token = tokens.find((t) => t.name === e.key);
@@ -77,9 +79,9 @@ export function Tape() {
           {indices.map((i) => (
             <Cell
               key={i}
-              tokenId={present.cells[i] ?? BLANK_ID}
+              tokenId={present.cells[i] ?? BLANK}
               index={i}
-              active={past.length === 0 && i === head}
+              active={!started && i === head}
               style={{ left: i * PITCH }}
             />
           ))}
@@ -96,7 +98,7 @@ function Cell({
   active,
   style,
 }: {
-  tokenId: ID;
+  tokenId: string;
   index: number;
   active: boolean;
   style: React.CSSProperties;

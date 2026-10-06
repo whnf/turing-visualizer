@@ -1,40 +1,41 @@
-import { type SavedMachine } from "@/lib/storage";
-import { type ID, BLANK_ID, INITIAL_ID } from "@/store/tableSlice";
+import type { SavedMachine } from "@/lib/storage";
 
-const blank = { id: BLANK_ID, name: "_" };
+import { BLANK, Q0 } from "@/store/tableSlice";
+
+const blank = { id: BLANK, name: "_" };
 
 export const blankMachine: SavedMachine = {
   id: "",
   title: "",
   description: "",
   updatedAt: 0,
-  phases: [{ id: INITIAL_ID, name: "q0" }],
+  phases: [{ id: Q0, name: "q0" }],
   tokens: [blank],
   transitions: {},
   cells: {},
   head: 0,
 };
 
-export const examples: Record<ID, SavedMachine> = {
+export const examples: Record<string, SavedMachine> = {
   "binary-increment": {
     id: "binary-increment",
     title: "Binary increment",
     description: "Adds 1 to a binary number",
     updatedAt: 0,
     phases: [
-      { id: INITIAL_ID, name: "seek" },
+      { id: Q0, name: "seek" },
       { id: "carry", name: "carry" },
       { id: "done", name: "done" },
     ],
     tokens: [blank, { id: "t0", name: "0" }, { id: "t1", name: "1" }],
     transitions: {
-      [INITIAL_ID]: {
-        [BLANK_ID]: { nextPhaseId: "carry", nextTokenId: BLANK_ID, move: "L" },
-        t0: { nextPhaseId: INITIAL_ID, nextTokenId: "t0", move: "R" },
-        t1: { nextPhaseId: INITIAL_ID, nextTokenId: "t1", move: "R" },
+      [Q0]: {
+        [BLANK]: { nextPhaseId: "carry", nextTokenId: BLANK, move: "L" },
+        t0: { nextPhaseId: Q0, nextTokenId: "t0", move: "R" },
+        t1: { nextPhaseId: Q0, nextTokenId: "t1", move: "R" },
       },
       carry: {
-        [BLANK_ID]: { nextPhaseId: "done", nextTokenId: "t1", move: "S" },
+        [BLANK]: { nextPhaseId: "done", nextTokenId: "t1", move: "S" },
         t0: { nextPhaseId: "done", nextTokenId: "t1", move: "S" },
         t1: { nextPhaseId: "carry", nextTokenId: "t0", move: "L" },
       },
@@ -48,24 +49,24 @@ export const examples: Record<ID, SavedMachine> = {
     description: "3 states, halts after 14 steps with six 1s",
     updatedAt: 0,
     phases: [
-      { id: INITIAL_ID, name: "A" },
+      { id: Q0, name: "A" },
       { id: "b", name: "B" },
       { id: "c", name: "C" },
       { id: "h", name: "H" },
     ],
     tokens: [blank, { id: "t1", name: "1" }],
     transitions: {
-      [INITIAL_ID]: {
-        [BLANK_ID]: { nextPhaseId: "b", nextTokenId: "t1", move: "R" },
+      [Q0]: {
+        [BLANK]: { nextPhaseId: "b", nextTokenId: "t1", move: "R" },
         t1: { nextPhaseId: "h", nextTokenId: "t1", move: "R" },
       },
       b: {
-        [BLANK_ID]: { nextPhaseId: "c", nextTokenId: BLANK_ID, move: "R" },
+        [BLANK]: { nextPhaseId: "c", nextTokenId: BLANK, move: "R" },
         t1: { nextPhaseId: "b", nextTokenId: "t1", move: "R" },
       },
       c: {
-        [BLANK_ID]: { nextPhaseId: "c", nextTokenId: "t1", move: "L" },
-        t1: { nextPhaseId: INITIAL_ID, nextTokenId: "t1", move: "L" },
+        [BLANK]: { nextPhaseId: "c", nextTokenId: "t1", move: "L" },
+        t1: { nextPhaseId: Q0, nextTokenId: "t1", move: "L" },
       },
     },
     cells: {},
@@ -77,7 +78,7 @@ export const examples: Record<ID, SavedMachine> = {
     description: "Accepts 0110, rejects 0101",
     updatedAt: 0,
     phases: [
-      { id: INITIAL_ID, name: "q0" },
+      { id: Q0, name: "q0" },
       { id: "q1", name: "q1" },
       { id: "q2", name: "q2" },
       { id: "q3", name: "q3" },
@@ -93,45 +94,45 @@ export const examples: Record<ID, SavedMachine> = {
       { id: "tx", name: "X" },
     ],
     transitions: {
-      [INITIAL_ID]: {
-        [BLANK_ID]: { nextPhaseId: "qa", nextTokenId: BLANK_ID, move: "S" },
+      [Q0]: {
+        [BLANK]: { nextPhaseId: "qa", nextTokenId: BLANK, move: "S" },
         t0: { nextPhaseId: "q1", nextTokenId: "tx", move: "R" },
         t1: { nextPhaseId: "q2", nextTokenId: "tx", move: "R" },
         tx: { nextPhaseId: "qa", nextTokenId: "tx", move: "S" },
       },
       q1: {
-        [BLANK_ID]: { nextPhaseId: "q3", nextTokenId: BLANK_ID, move: "L" },
+        [BLANK]: { nextPhaseId: "q3", nextTokenId: BLANK, move: "L" },
         t0: { nextPhaseId: "q1", nextTokenId: "t0", move: "R" },
         t1: { nextPhaseId: "q1", nextTokenId: "t1", move: "R" },
         tx: { nextPhaseId: "q3", nextTokenId: "tx", move: "L" },
       },
       q2: {
-        [BLANK_ID]: { nextPhaseId: "q4", nextTokenId: BLANK_ID, move: "L" },
+        [BLANK]: { nextPhaseId: "q4", nextTokenId: BLANK, move: "L" },
         t0: { nextPhaseId: "q2", nextTokenId: "t0", move: "R" },
         t1: { nextPhaseId: "q2", nextTokenId: "t1", move: "R" },
         tx: { nextPhaseId: "q4", nextTokenId: "tx", move: "L" },
       },
       q3: {
-        [BLANK_ID]: { nextPhaseId: "qa", nextTokenId: BLANK_ID, move: "S" },
+        [BLANK]: { nextPhaseId: "qa", nextTokenId: BLANK, move: "S" },
         t0: { nextPhaseId: "q5", nextTokenId: "tx", move: "L" },
         t1: { nextPhaseId: "qr", nextTokenId: "t1", move: "S" },
         tx: { nextPhaseId: "qa", nextTokenId: "tx", move: "S" },
       },
       q4: {
-        [BLANK_ID]: { nextPhaseId: "qa", nextTokenId: BLANK_ID, move: "S" },
+        [BLANK]: { nextPhaseId: "qa", nextTokenId: BLANK, move: "S" },
         t0: { nextPhaseId: "qr", nextTokenId: "t0", move: "S" },
         t1: { nextPhaseId: "q5", nextTokenId: "tx", move: "L" },
         tx: { nextPhaseId: "qa", nextTokenId: "tx", move: "S" },
       },
       q5: {
-        [BLANK_ID]: {
-          nextPhaseId: INITIAL_ID,
-          nextTokenId: BLANK_ID,
+        [BLANK]: {
+          nextPhaseId: Q0,
+          nextTokenId: BLANK,
           move: "R",
         },
         t0: { nextPhaseId: "q5", nextTokenId: "t0", move: "L" },
         t1: { nextPhaseId: "q5", nextTokenId: "t1", move: "L" },
-        tx: { nextPhaseId: INITIAL_ID, nextTokenId: "tx", move: "R" },
+        tx: { nextPhaseId: Q0, nextTokenId: "tx", move: "R" },
       },
     },
     cells: { 0: "t0", 1: "t1", 2: "t1", 3: "t0" },
@@ -143,7 +144,7 @@ export const examples: Record<ID, SavedMachine> = {
     description: "Rewrites n ones as 2n ones",
     updatedAt: 0,
     phases: [
-      { id: INITIAL_ID, name: "mark" },
+      { id: Q0, name: "mark" },
       { id: "append", name: "append" },
       { id: "return", name: "return" },
       { id: "rewind", name: "rewind" },
@@ -157,31 +158,31 @@ export const examples: Record<ID, SavedMachine> = {
       { id: "ty", name: "Y" },
     ],
     transitions: {
-      [INITIAL_ID]: {
-        [BLANK_ID]: { nextPhaseId: "done", nextTokenId: BLANK_ID, move: "S" },
+      [Q0]: {
+        [BLANK]: { nextPhaseId: "done", nextTokenId: BLANK, move: "S" },
         t1: { nextPhaseId: "append", nextTokenId: "tx", move: "R" },
         ty: { nextPhaseId: "rewind", nextTokenId: "ty", move: "L" },
       },
       append: {
-        [BLANK_ID]: { nextPhaseId: "return", nextTokenId: "ty", move: "L" },
+        [BLANK]: { nextPhaseId: "return", nextTokenId: "ty", move: "L" },
         t1: { nextPhaseId: "append", nextTokenId: "t1", move: "R" },
         ty: { nextPhaseId: "append", nextTokenId: "ty", move: "R" },
       },
       return: {
         t1: { nextPhaseId: "return", nextTokenId: "t1", move: "L" },
-        tx: { nextPhaseId: INITIAL_ID, nextTokenId: "tx", move: "R" },
+        tx: { nextPhaseId: Q0, nextTokenId: "tx", move: "R" },
         ty: { nextPhaseId: "return", nextTokenId: "ty", move: "L" },
       },
       rewind: {
-        [BLANK_ID]: {
+        [BLANK]: {
           nextPhaseId: "convert",
-          nextTokenId: BLANK_ID,
+          nextTokenId: BLANK,
           move: "R",
         },
         tx: { nextPhaseId: "rewind", nextTokenId: "tx", move: "L" },
       },
       convert: {
-        [BLANK_ID]: { nextPhaseId: "done", nextTokenId: BLANK_ID, move: "L" },
+        [BLANK]: { nextPhaseId: "done", nextTokenId: BLANK, move: "L" },
         tx: { nextPhaseId: "convert", nextTokenId: "t1", move: "R" },
         ty: { nextPhaseId: "convert", nextTokenId: "t1", move: "R" },
       },

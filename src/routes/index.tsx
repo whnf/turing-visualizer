@@ -9,9 +9,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 import { StorageDebug } from "@/components/StorageDebug";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 import { examples } from "@/lib/examples";
 import { listMachines } from "@/lib/storage";

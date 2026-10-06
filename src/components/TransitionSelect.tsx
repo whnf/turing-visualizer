@@ -1,24 +1,23 @@
 import { Button } from "@/components/ui/button";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectLabel,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
-  type ID,
-  type Move,
-  setTransition,
+  selectMove,
+  selectNextPhase,
+  selectNextToken,
   selectPhases,
   selectTokens,
-  selectNextPhaseByPhaseIdAndTokenId,
-  selectNextTokenByPhaseIdAndTokenId,
-  selectMoveByPhaseIdAndTokenId,
+  setTransition,
+  type Move,
 } from "@/store/tableSlice";
 
 function TransitionSelect({
@@ -28,13 +27,11 @@ function TransitionSelect({
   field,
   selectNext,
 }: {
-  phaseId: ID;
-  tokenId: ID;
+  phaseId: string;
+  tokenId: string;
   label: string;
   field: "nextPhaseId" | "nextTokenId";
-  selectNext:
-    | typeof selectNextPhaseByPhaseIdAndTokenId
-    | typeof selectNextTokenByPhaseIdAndTokenId;
+  selectNext: typeof selectNextPhase | typeof selectNextToken;
 }) {
   const dispatch = useAppDispatch();
 
@@ -42,7 +39,7 @@ function TransitionSelect({
     selectNext(state, phaseId, tokenId),
   );
 
-  const handleChange = (entityId: ID | null) => {
+  const handleChange = (entityId: string | null) => {
     if (!entityId) {
       return;
     }
@@ -89,8 +86,8 @@ export function NextPhaseSelect({
   phaseId,
   tokenId,
 }: {
-  phaseId: ID;
-  tokenId: ID;
+  phaseId: string;
+  tokenId: string;
 }) {
   return (
     <TransitionSelect
@@ -98,7 +95,7 @@ export function NextPhaseSelect({
       tokenId={tokenId}
       label="State"
       field="nextPhaseId"
-      selectNext={selectNextPhaseByPhaseIdAndTokenId}
+      selectNext={selectNextPhase}
     />
   );
 }
@@ -107,8 +104,8 @@ export function NextTokenSelect({
   phaseId,
   tokenId,
 }: {
-  phaseId: ID;
-  tokenId: ID;
+  phaseId: string;
+  tokenId: string;
 }) {
   return (
     <TransitionSelect
@@ -116,17 +113,21 @@ export function NextTokenSelect({
       tokenId={tokenId}
       label="Symbol"
       field="nextTokenId"
-      selectNext={selectNextTokenByPhaseIdAndTokenId}
+      selectNext={selectNextToken}
     />
   );
 }
 
-export function MoveButton({ phaseId, tokenId }: { phaseId: ID; tokenId: ID }) {
+export function MoveButton({
+  phaseId,
+  tokenId,
+}: {
+  phaseId: string;
+  tokenId: string;
+}) {
   const dispatch = useAppDispatch();
 
-  const move = useAppSelector((state) =>
-    selectMoveByPhaseIdAndTokenId(state, phaseId, tokenId),
-  );
+  const move = useAppSelector((state) => selectMove(state, phaseId, tokenId));
 
   const handleClick = () => {
     if (!move) {

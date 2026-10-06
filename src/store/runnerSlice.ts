@@ -3,35 +3,42 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { loadMachine } from "@/store/actions";
 
 type RunnerState = {
+  running: boolean;
   speed: number;
-  status: "idle" | "running";
 };
 
 const initialState: RunnerState = {
+  running: false,
   speed: 1,
-  status: "idle",
 };
 
 const runnerSlice = createSlice({
   name: "runner",
   initialState,
   reducers: {
+    run(state) {
+      state.running = true;
+    },
+    pause(state) {
+      state.running = false;
+    },
     setSpeed(state, action: PayloadAction<number>) {
       state.speed = action.payload;
     },
-    run(state) {
-      state.status = "running";
-    },
-    stop(state) {
-      state.status = "idle";
-    },
   },
-  extraReducers: (builder) =>
+  extraReducers: (builder) => {
     builder.addCase(loadMachine, (state) => {
-      state.status = "idle";
-    }),
+      state.running = false;
+    });
+  },
+  selectors: {
+    selectRunning: (state) => state.running,
+    selectSpeed: (state) => state.speed,
+  },
 });
 
-export const { setSpeed, run, stop } = runnerSlice.actions;
+export const { run, pause, setSpeed } = runnerSlice.actions;
+
+export const { selectRunning, selectSpeed } = runnerSlice.selectors;
 
 export default runnerSlice.reducer;

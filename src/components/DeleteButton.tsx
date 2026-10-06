@@ -3,13 +3,13 @@ import { Trash } from "lucide-react";
 import { InputGroupButton } from "@/components/ui/input-group";
 
 import { useAppDispatch } from "@/store/hooks";
-import { removePhase, removeToken, type ID } from "@/store/tableSlice";
+import { removePhase, removeToken } from "@/store/tableSlice";
 
 function DeleteButton({
   id,
   deleteAction,
 }: {
-  id: ID;
+  id: string;
   deleteAction: typeof removePhase | typeof removeToken;
 }) {
   const dispatch = useAppDispatch();
@@ -29,10 +29,10 @@ function DeleteButton({
   );
 }
 
-export function DeletePhase({ id }: { id: ID }) {
+export function DeletePhase({ id }: { id: string }) {
   return <DeleteButton id={id} deleteAction={removePhase} />;
 }
 
-export function DeleteToken({ id }: { id: ID }) {
+export function DeleteToken({ id }: { id: string }) {
   return <DeleteButton id={id} deleteAction={removeToken} />;
 }

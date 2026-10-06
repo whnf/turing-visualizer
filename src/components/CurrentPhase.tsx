@@ -1,13 +1,10 @@
 import { Badge } from "@/components/ui/badge";
 
 import { useAppSelector } from "@/store/hooks";
-import { selectPhaseById } from "@/store/tableSlice";
-import { selectPhaseId } from "@/store/tapeSlice";
+import { selectCurrentPhase } from "@/store/selectors";
 
 export function CurrentPhase() {
-  const phase = useAppSelector((state) =>
-    selectPhaseById(state, selectPhaseId(state)),
-  );
+  const phase = useAppSelector(selectCurrentPhase);
 
   return <Badge variant="secondary">{phase?.name}</Badge>;
 }

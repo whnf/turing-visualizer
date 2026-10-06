@@ -1,38 +1,31 @@
 import { useEffect } from "react";
 
-import { useAppSelector, useAppDispatch, useAppStore } from "@/store/hooks";
-
-import { stop } from "@/store/runnerSlice";
-import { selectTransitionByPhaseIdAndTokenId } from "@/store/tableSlice";
-import { selectPhaseId, selectTokenId, step } from "@/store/tapeSlice";
+import { useAppDispatch, useAppSelector, useAppStore } from "@/store/hooks";
+import { pause, selectRunning, selectSpeed } from "@/store/runnerSlice";
+import { selectCurrentTransition } from "@/store/selectors";
+import { selectPresent, step } from "@/store/tapeSlice";
 
 export const useRunLoop = () => {
   const dispatch = useAppDispatch();
   const store = useAppStore();
 
-  const present = useAppSelector((state) => state.tape.present);
-  const transition = useAppSelector((state) =>
-    selectTransitionByPhaseIdAndTokenId(
-      state,
-      selectPhaseId(state),
-      selectTokenId(state),
-    ),
-  );
+  const present = useAppSelector(selectPresent);
+  const transition = useAppSelector(selectCurrentTransition);
 
-  const status = useAppSelector((state) => state.runner.status);
+  const running = useAppSelector(selectRunning);
 
   useEffect(() => {
-    if (status !== "running") {
+    if (!running) {
       return;
     }
 
     if (!transition?.nextPhaseId) {
-      dispatch(stop());
+      dispatch(pause());
       return;
     }
 
-    const delay = 1000 / store.getState().runner.speed;
+    const delay = 1000 / selectSpeed(store.getState());
     const id = setTimeout(() => dispatch(step(transition)), delay);
     return () => clearTimeout(id);
-  }, [status, present, transition, dispatch, store]);
+  }, [running, present, transition, dispatch, store]);
 };

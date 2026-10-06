@@ -13,7 +13,8 @@ export type SavedMachine = {
   phases: Phase[];
   tokens: Token[];
   transitions: Record<ID, Record<ID, Transition>>;
-  tape: { cells: Record<number, ID>; head: number };
+  cells: Record<number, ID>;
+  head: number;
 };
 
 const KEY = "turing-visualizer:machines";

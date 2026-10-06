@@ -1,5 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
+import { loadMachine } from "@/store/actions";
+
 type RunnerState = {
   speed: number;
   status: "idle" | "running";
@@ -24,6 +26,10 @@ const runnerSlice = createSlice({
       state.status = "idle";
     },
   },
+  extraReducers: (builder) =>
+    builder.addCase(loadMachine, (state) => {
+      state.status = "idle";
+    }),
 });
 
 export const { setSpeed, run, stop } = runnerSlice.actions;

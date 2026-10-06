@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
+import { loadMachine } from "@/store/actions";
 import { type ID } from "@/store/tableSlice";
 
 type MetaState = {
@@ -27,6 +28,12 @@ const metaSlice = createSlice({
       state.description = action.payload;
     },
   },
+  extraReducers: (builder) =>
+    builder.addCase(loadMachine, (state, action) => {
+      const { id, title, description, updatedAt } = action.payload;
+
+      Object.assign(state, { id, title, description, updatedAt });
+    }),
 });
 
 export const { setTitle, setDescription } = metaSlice.actions;

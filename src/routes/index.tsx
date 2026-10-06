@@ -11,15 +11,12 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
+import { StorageDebug } from "@/components/StorageDebug";
+
+import { examples } from "@/lib/examples";
+
 const defined = [
   { title: "Untitled machine 1", description: "2 states, 2 symbols" },
-];
-
-const examples = [
-  { title: "Binary increment", description: "adds 1 to a binary number" },
-  { title: "Busy beaver (3)", description: "halts after 14 steps with six 1s" },
-  { title: "Palindrome", description: "accepts abba, rejects abab" },
-  { title: "Unary double", description: "rewrites n ones as 2n ones" },
 ];
 
 function Home() {
@@ -27,7 +24,7 @@ function Home() {
     <div className="container p-8">
       <div className="flex justify-between">
         <div>
-          <h1 className="font-bold text-xl">Turing Machine Visualizer</h1>
+          <h1 className="text-xl font-bold">Turing Machine Visualizer</h1>
           <h2 className="text-muted-foreground">
             Pick a machine to run, or start one from scratch
           </h2>
@@ -35,9 +32,9 @@ function Home() {
         <ThemeToggle />
       </div>
       <section className="py-6">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="font-bold text-lg">Your machines</h3>
-          <Link to="/machine">
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="text-lg font-bold">Your machines</h3>
+          <Link to="/machine/{-$id}">
             <Button size="lg">
               <PlusIcon /> New machine
             </Button>
@@ -54,21 +51,28 @@ function Home() {
           ))}
         </div>
       </section>
-      <div className="flex items-center text-muted-foreground text-xs">
+      <div className="flex items-center text-xs text-muted-foreground">
         EXAMPLES <Separator className="ml-2 shrink" />
       </div>
       <section className="py-6">
         <div className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
-          {examples.map((example, i) => (
-            <Card key={i}>
-              <CardHeader>
-                <CardTitle className="font-bold">{example.title}</CardTitle>
-                <CardDescription>{example.description}</CardDescription>
-              </CardHeader>
-            </Card>
+          {Object.values(examples).map((example) => (
+            <Link
+              key={example.id}
+              to="/machine/{-$id}"
+              params={{ id: example.id }}
+            >
+              <Card className="h-full transition-colors hover:bg-muted">
+                <CardHeader>
+                  <CardTitle className="font-bold">{example.title}</CardTitle>
+                  <CardDescription>{example.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
           ))}
         </div>
       </section>
+      {import.meta.env.DEV && <StorageDebug />}
     </div>
   );
 }

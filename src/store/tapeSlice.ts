@@ -1,5 +1,7 @@
 import { createSlice, current, type PayloadAction } from "@reduxjs/toolkit";
 
+import { loadMachine } from "@/store/actions";
+
 import {
   type ID,
   type Transition,
@@ -22,7 +24,7 @@ export type TapeState = {
 const initialState: TapeState = {
   past: [],
   present: {
-    cells: { 0: "t0", 1: "t1", 2: "t1", 3: "t0" },
+    cells: {},
     head: 0,
     phaseId: INITIAL_ID,
   },
@@ -83,15 +85,22 @@ const tapeSlice = createSlice({
     },
   },
   extraReducers: (builder) =>
-    builder.addCase(removeToken, (state, action) => {
-      for (const { cells } of [state.present, ...state.past]) {
-        for (const [index, id] of Object.entries(cells)) {
-          if (id === action.payload) {
-            delete cells[Number(index)];
+    builder
+      .addCase(loadMachine, (state, action) => {
+        const { cells, head } = action.payload;
+
+        state.past = [];
+        state.present = { cells, head, phaseId: INITIAL_ID };
+      })
+      .addCase(removeToken, (state, action) => {
+        for (const { cells } of [state.present, ...state.past]) {
+          for (const [index, id] of Object.entries(cells)) {
+            if (id === action.payload) {
+              delete cells[Number(index)];
+            }
           }
         }
-      }
-    }),
+      }),
   selectors: {
     selectPhaseId: (state) => state.present.phaseId,
     selectTokenId: (state) =>

@@ -18,6 +18,11 @@ import { CurrentPhase } from "@/components/CurrentPhase";
 import { Toolbar } from "@/components/Toolbar";
 import { StorageDebug } from "@/components/StorageDebug";
 
+import { blankMachine, examples } from "@/lib/examples";
+import { getMachine } from "@/lib/storage";
+import { loadMachine } from "@/store/actions";
+import { store } from "@/store/store";
+
 function Machine() {
   return (
     <div className="container flex flex-col gap-4 p-8">
@@ -52,6 +57,13 @@ function Machine() {
   );
 }
 
-export const Route = createFileRoute("/machine")({
+export const Route = createFileRoute("/machine/{-$id}")({
+  loader: ({ params: { id } }) => {
+    const machine = id
+      ? (getMachine(id) ?? examples[id] ?? blankMachine)
+      : blankMachine;
+
+    store.dispatch(loadMachine(machine));
+  },
   component: Machine,
 });

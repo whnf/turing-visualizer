@@ -21,6 +21,7 @@ export const selectSavedMachine = createSelector(
     phases,
     tokens,
     transitions,
-    tape: { cells, head },
+    cells,
+    head,
   }),
 );

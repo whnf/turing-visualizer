@@ -1,6 +1,8 @@
 import { createEntityAdapter, createSlice, nanoid } from "@reduxjs/toolkit";
 import type { EntityState, PayloadAction } from "@reduxjs/toolkit";
 
+import { loadMachine } from "@/store/actions";
+
 export type ID = string;
 
 export const INITIAL_ID: ID = "initial";
@@ -33,67 +35,14 @@ export type TableState = {
 const phasesAdapter = createEntityAdapter<Phase>();
 const tokensAdapter = createEntityAdapter<Token>();
 
-const initialPhases: Phase[] = [
-  { id: INITIAL_ID, name: "q0" },
-  { id: "q1", name: "q1" },
-  { id: "q2", name: "q2" },
-  { id: "q3", name: "q3" },
-  { id: "q4", name: "q4" },
-  { id: "q5", name: "q5" },
-  { id: "qa", name: "qa" },
-  { id: "qr", name: "qr" },
-];
-
-const initialTokens: Token[] = [
-  { id: BLANK_ID, name: "\u2423" },
-  { id: "t0", name: "0" },
-  { id: "t1", name: "1" },
-  { id: "tx", name: "X" },
-];
-
-const initialTransitions: Record<ID, Record<ID, Transition>> = {
-  [INITIAL_ID]: {
-    [BLANK_ID]: { nextPhaseId: "qa", nextTokenId: BLANK_ID, move: "S" },
-    t0: { nextPhaseId: "q1", nextTokenId: "tx", move: "R" },
-    t1: { nextPhaseId: "q2", nextTokenId: "tx", move: "R" },
-    tx: { nextPhaseId: "qa", nextTokenId: "tx", move: "S" },
-  },
-  q1: {
-    [BLANK_ID]: { nextPhaseId: "q3", nextTokenId: BLANK_ID, move: "L" },
-    t0: { nextPhaseId: "q1", nextTokenId: "t0", move: "R" },
-    t1: { nextPhaseId: "q1", nextTokenId: "t1", move: "R" },
-    tx: { nextPhaseId: "q3", nextTokenId: "tx", move: "L" },
-  },
-  q2: {
-    [BLANK_ID]: { nextPhaseId: "q4", nextTokenId: BLANK_ID, move: "L" },
-    t0: { nextPhaseId: "q2", nextTokenId: "t0", move: "R" },
-    t1: { nextPhaseId: "q2", nextTokenId: "t1", move: "R" },
-    tx: { nextPhaseId: "q4", nextTokenId: "tx", move: "L" },
-  },
-  q3: {
-    [BLANK_ID]: { nextPhaseId: "qa", nextTokenId: BLANK_ID, move: "S" },
-    t0: { nextPhaseId: "q5", nextTokenId: "tx", move: "L" },
-    t1: { nextPhaseId: "qr", nextTokenId: "t1", move: "S" },
-    tx: { nextPhaseId: "qa", nextTokenId: "tx", move: "S" },
-  },
-  q4: {
-    [BLANK_ID]: { nextPhaseId: "qa", nextTokenId: BLANK_ID, move: "S" },
-    t0: { nextPhaseId: "qr", nextTokenId: "t0", move: "S" },
-    t1: { nextPhaseId: "q5", nextTokenId: "tx", move: "L" },
-    tx: { nextPhaseId: "qa", nextTokenId: "tx", move: "S" },
-  },
-  q5: {
-    [BLANK_ID]: { nextPhaseId: INITIAL_ID, nextTokenId: BLANK_ID, move: "R" },
-    t0: { nextPhaseId: "q5", nextTokenId: "t0", move: "L" },
-    t1: { nextPhaseId: "q5", nextTokenId: "t1", move: "L" },
-    tx: { nextPhaseId: INITIAL_ID, nextTokenId: "tx", move: "R" },
-  },
-};
-
 const initialState: TableState = {
-  phases: phasesAdapter.setAll(phasesAdapter.getInitialState(), initialPhases),
-  tokens: tokensAdapter.setAll(tokensAdapter.getInitialState(), initialTokens),
-  transitions: initialTransitions,
+  phases: phasesAdapter.setAll(phasesAdapter.getInitialState(), [
+    { id: INITIAL_ID, name: "q0" },
+  ]),
+  tokens: tokensAdapter.setAll(tokensAdapter.getInitialState(), [
+    { id: BLANK_ID, name: "_" },
+  ]),
+  transitions: {},
 };
 
 const phaseSelectors = phasesAdapter.getSelectors(
@@ -212,6 +161,12 @@ const tableSlice = createSlice({
       Object.assign(state.transitions[phaseId][tokenId], changes);
     },
   },
+  extraReducers: (builder) =>
+    builder.addCase(loadMachine, (state, action) => {
+      phasesAdapter.setAll(state.phases, action.payload.phases);
+      tokensAdapter.setAll(state.tokens, action.payload.tokens);
+      state.transitions = action.payload.transitions;
+    }),
   selectors: {
     selectPhases: phaseSelectors.selectAll,
     selectPhaseById: phaseSelectors.selectById,

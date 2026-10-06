@@ -16,6 +16,7 @@ import { AppendPhase, AppendToken } from "@/components/AppendButton";
 import { TapeEditHint } from "@/components/TapeEditHint";
 import { CurrentPhase } from "@/components/CurrentPhase";
 import { Toolbar } from "@/components/Toolbar";
+import { StorageDebug } from "@/components/StorageDebug";
 
 function Machine() {
   return (
@@ -46,6 +47,7 @@ function Machine() {
           <TransitionTable />
         </CardContent>
       </Card>
+      {import.meta.env.DEV && <StorageDebug />}
     </div>
   );
 }

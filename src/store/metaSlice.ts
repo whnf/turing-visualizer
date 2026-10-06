@@ -6,12 +6,14 @@ type MetaState = {
   id: ID;
   title: string;
   description: string;
+  updatedAt: number;
 };
 
 const initialState: MetaState = {
   id: "",
   title: "",
   description: "",
+  updatedAt: 0,
 };
 
 const metaSlice = createSlice({

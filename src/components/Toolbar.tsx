@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+import { SaveButton } from "@/components/SaveButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -15,6 +16,8 @@ export function Toolbar() {
 
   const title = useAppSelector((state) => state.meta.title);
   const description = useAppSelector((state) => state.meta.description);
+  const phaseCount = useAppSelector(selectPhaseCount);
+  const tokenCount = useAppSelector(selectTokenCount);
 
   const handleTitleChange = (e: React.FocusEvent<HTMLInputElement>) => {
     dispatch(setTitle(e.target.value));
@@ -23,9 +26,6 @@ export function Toolbar() {
   const handleDescriptionChange = (e: React.FocusEvent<HTMLInputElement>) => {
     dispatch(setDescription(e.target.value));
   };
-
-  const phaseCount = useAppSelector(selectPhaseCount);
-  const tokenCount = useAppSelector(selectTokenCount);
 
   return (
     <div className="flex flex-col gap-4">
@@ -41,9 +41,7 @@ export function Toolbar() {
           onBlur={handleTitleChange}
           placeholder="Untitled machine"
         />
-        <Button variant="outline" disabled>
-          <Save /> Save
-        </Button>
+        <SaveButton />
         <ThemeToggle />
       </div>
       <Input

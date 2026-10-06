@@ -14,12 +14,11 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { StorageDebug } from "@/components/StorageDebug";
 
 import { examples } from "@/lib/examples";
-
-const defined = [
-  { title: "Untitled machine 1", description: "2 states, 2 symbols" },
-];
+import { listMachines } from "@/lib/storage";
 
 function Home() {
+  const machines = Route.useLoaderData();
+
   return (
     <div className="container p-8">
       <div className="flex justify-between">
@@ -40,16 +39,33 @@ function Home() {
             </Button>
           </Link>
         </div>
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
-          {defined.map((machine, i) => (
-            <Card key={i}>
-              <CardHeader>
-                <CardTitle className="font-bold">{machine.title}</CardTitle>
-                <CardDescription>{machine.description}</CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
+        {machines.length === 0 ? (
+          <div className="border border-dashed p-4 text-xs text-muted-foreground">
+            Nothing here yet. Machines you create are saved in this browser.
+          </div>
+        ) : (
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
+            {machines.map((machine) => (
+              <Link
+                key={machine.id}
+                to="/machine/{-$id}"
+                params={{ id: machine.id }}
+              >
+                <Card className="h-full transition-colors hover:bg-muted">
+                  <CardHeader>
+                    <CardTitle className="font-bold">
+                      {machine.title || "Untitled machine"}
+                    </CardTitle>
+                    <CardDescription>
+                      {machine.description ||
+                        `${machine.phases.length} states, ${machine.tokens.length} symbols`}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        )}
       </section>
       <div className="flex items-center text-xs text-muted-foreground">
         EXAMPLES <Separator className="ml-2 shrink" />
@@ -78,5 +94,6 @@ function Home() {
 }
 
 export const Route = createFileRoute("/")({
+  loader: () => listMachines(),
   component: Home,
 });

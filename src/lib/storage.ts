@@ -1,37 +1,53 @@
 import type { SavedMachine } from "@/lib/machine";
 
-const MACHINES_KEY = "turing-visualizer:machines";
+const read = <T>(key: string, fallback: T): T => {
+  const raw = localStorage.getItem(key);
 
-const read = (): Record<string, SavedMachine> =>
-  JSON.parse(localStorage.getItem(MACHINES_KEY) ?? "{}");
-
-const write = (machines: Record<string, SavedMachine>): void => {
-  localStorage.setItem(MACHINES_KEY, JSON.stringify(machines));
+  return raw === null ? fallback : JSON.parse(raw);
 };
 
+const write = (key: string, value: unknown): void => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
+const MACHINES_KEY = "turing-visualizer:machines";
+
+const readMachines = () => read<Record<string, SavedMachine>>(MACHINES_KEY, {});
+
 export const listMachines = (): SavedMachine[] => {
-  return Object.values(read()).sort((a, b) => b.updatedAt - a.updatedAt);
+  return Object.values(readMachines()).sort(
+    (a, b) => b.updatedAt - a.updatedAt,
+  );
 };
 
 export const getMachine = (id: string): SavedMachine | undefined => {
-  return read()[id];
+  return readMachines()[id];
 };
 
 export const saveMachine = (machine: SavedMachine): void => {
-  write({ ...read(), [machine.id]: machine });
+  write(MACHINES_KEY, { ...readMachines(), [machine.id]: machine });
 };
 
 export const deleteMachine = (id: string): void => {
-  const machines = read();
+  const machines = readMachines();
   delete machines[id];
-  write(machines);
+  write(MACHINES_KEY, machines);
 };
 
 const SPEED_KEY = "turing-visualizer:speed";
 
-export const loadSpeed = (): number =>
-  Number(localStorage.getItem(SPEED_KEY) ?? 1);
+export const loadSpeed = (): number => read(SPEED_KEY, 1);
 
 export const saveSpeed = (speed: number): void => {
-  localStorage.setItem(SPEED_KEY, String(speed));
+  write(SPEED_KEY, speed);
+};
+
+const THEME_KEY = "turing-visualizer:theme";
+
+export type Theme = "light" | "dark";
+
+export const loadTheme = (): Theme | null => read(THEME_KEY, null);
+
+export const saveTheme = (theme: Theme): void => {
+  write(THEME_KEY, theme);
 };

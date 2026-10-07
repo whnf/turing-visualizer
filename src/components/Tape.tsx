@@ -1,7 +1,7 @@
+import { cn } from "cn";
 import { ArrowDown, ArrowUp } from "lucide-react";
 
 import { BLANK } from "@/lib/machine";
-import { cn } from "@/lib/utils";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { selectTokenById, selectTokens } from "@/store/tableSlice";

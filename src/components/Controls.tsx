@@ -39,21 +39,20 @@ export function Controls() {
 
   const dispatch = useAppDispatch();
 
-  const canReset = started;
   const handleReset = () => {
-    if (canReset) {
+    if (started) {
       dispatch(reset());
     }
   };
 
-  const canBack = started;
   const handleBack = () => {
-    if (canBack) {
+    if (started) {
       dispatch(back());
     }
   };
 
   const canStep = !!transition?.nextPhaseId;
+
   const handleStep = () => {
     if (canStep) {
       dispatch(step(transition));
@@ -89,7 +88,7 @@ export function Controls() {
         <Button
           variant="outline"
           onClick={handleReset}
-          disabled={!canReset || running}
+          disabled={!started || running}
         >
           <RotateCcw />
           Reset
@@ -99,7 +98,7 @@ export function Controls() {
         </span>
       </div>
       <ButtonGroup className="flex flex-1 justify-center">
-        <Button onClick={handleBack} disabled={!canBack || running}>
+        <Button onClick={handleBack} disabled={!started || running}>
           <ArrowLeftToLine /> Back
         </Button>
         <Button onClick={handleStep} disabled={!canStep || running}>

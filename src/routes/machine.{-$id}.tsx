@@ -18,7 +18,7 @@ import { TapeEditHint } from "@/components/TapeEditHint";
 import { Toolbar } from "@/components/Toolbar";
 import { TransitionTable } from "@/components/TransitionTable";
 
-import { blankMachine, examples } from "@/lib/examples";
+import { defaultMachine, examples } from "@/lib/examples";
 import { getMachine } from "@/lib/storage";
 
 import { loadMachine } from "@/store/actions";
@@ -61,8 +61,8 @@ function Machine() {
 export const Route = createFileRoute("/machine/{-$id}")({
   loader: ({ params: { id } }) => {
     const machine = id
-      ? (getMachine(id) ?? examples[id] ?? blankMachine)
-      : blankMachine;
+      ? (getMachine(id) ?? examples[id] ?? defaultMachine)
+      : defaultMachine;
 
     store.dispatch(loadMachine(machine));
   },

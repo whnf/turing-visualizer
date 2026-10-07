@@ -4,7 +4,7 @@ import { Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-import { blankMachine, examples } from "@/lib/examples";
+import { defaultMachine, examples } from "@/lib/examples";
 import { getMachine, saveMachine } from "@/lib/storage";
 
 import { useAppSelector } from "@/store/hooks";
@@ -15,7 +15,7 @@ export function SaveButton() {
 
   const machine = useAppSelector(selectSavedMachine);
 
-  const original = machine.id ? getMachine(machine.id) : blankMachine;
+  const original = machine.id ? getMachine(machine.id) : defaultMachine;
   const saved = JSON.stringify(machine) === JSON.stringify(original);
 
   const handleSave = () => {

@@ -6,6 +6,7 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 
+import { defaultMachine } from "@/lib/examples";
 import {
   BLANK,
   Move,
@@ -27,13 +28,15 @@ const phasesAdapter = createEntityAdapter<Phase>();
 const tokensAdapter = createEntityAdapter<Token>();
 
 const initialState: TableState = {
-  phases: phasesAdapter.setAll(phasesAdapter.getInitialState(), [
-    { id: Q0, name: "q0" },
-  ]),
-  tokens: tokensAdapter.setAll(tokensAdapter.getInitialState(), [
-    { id: BLANK, name: "_" },
-  ]),
-  transitions: {},
+  phases: phasesAdapter.setAll(
+    phasesAdapter.getInitialState(),
+    defaultMachine.phases,
+  ),
+  tokens: tokensAdapter.setAll(
+    tokensAdapter.getInitialState(),
+    defaultMachine.tokens,
+  ),
+  transitions: defaultMachine.transitions,
 };
 
 const phaseSelectors = phasesAdapter.getSelectors(

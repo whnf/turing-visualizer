@@ -1,14 +1,20 @@
 import { BLANK, Move, Q0, type SavedMachine } from "@/lib/machine";
 
-const blank = { id: BLANK, name: "_" };
-
-export const blankMachine: SavedMachine = {
+export const defaultMachine: SavedMachine = {
   id: "",
   title: "",
   description: "",
   updatedAt: 0,
-  phases: [{ id: Q0, name: "q0" }],
-  tokens: [blank],
+  phases: [
+    { id: Q0, name: "q0" },
+    { id: "qa", name: "qa" },
+    { id: "qr", name: "qr" },
+  ],
+  tokens: [
+    { id: BLANK, name: "_" },
+    { id: "t0", name: "0" },
+    { id: "tX", name: "X" },
+  ],
   transitions: {},
   cells: {},
   head: 0,
@@ -25,7 +31,11 @@ export const examples: Record<string, SavedMachine> = {
       { id: "carry", name: "carry" },
       { id: "done", name: "done" },
     ],
-    tokens: [blank, { id: "t0", name: "0" }, { id: "t1", name: "1" }],
+    tokens: [
+      { id: BLANK, name: "_" },
+      { id: "t0", name: "0" },
+      { id: "t1", name: "1" },
+    ],
     transitions: {
       [Q0]: {
         [BLANK]: { nextPhaseId: "carry", nextTokenId: BLANK, move: Move.Left },
@@ -52,7 +62,10 @@ export const examples: Record<string, SavedMachine> = {
       { id: "c", name: "C" },
       { id: "h", name: "H" },
     ],
-    tokens: [blank, { id: "t1", name: "1" }],
+    tokens: [
+      { id: BLANK, name: "_" },
+      { id: "t1", name: "1" },
+    ],
     transitions: {
       [Q0]: {
         [BLANK]: { nextPhaseId: "b", nextTokenId: "t1", move: Move.Right },
@@ -86,7 +99,7 @@ export const examples: Record<string, SavedMachine> = {
       { id: "qr", name: "qr" },
     ],
     tokens: [
-      blank,
+      { id: BLANK, name: "_" },
       { id: "t0", name: "0" },
       { id: "t1", name: "1" },
       { id: "tx", name: "X" },
@@ -150,7 +163,7 @@ export const examples: Record<string, SavedMachine> = {
       { id: "done", name: "done" },
     ],
     tokens: [
-      blank,
+      { id: BLANK, name: "_" },
       { id: "t1", name: "1" },
       { id: "tx", name: "X" },
       { id: "ty", name: "Y" },

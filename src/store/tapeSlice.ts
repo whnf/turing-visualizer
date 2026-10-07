@@ -1,5 +1,6 @@
 import { createSlice, current, type PayloadAction } from "@reduxjs/toolkit";
 
+import { defaultMachine } from "@/lib/examples";
 import { BLANK, Move, Q0, type Transition } from "@/lib/machine";
 
 import { loadMachine } from "@/store/actions";
@@ -19,8 +20,8 @@ export type TapeState = {
 const initialState: TapeState = {
   past: [],
   present: {
-    cells: {},
-    head: 0,
+    cells: defaultMachine.cells,
+    head: defaultMachine.head,
     phaseId: Q0,
   },
 };

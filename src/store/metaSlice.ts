@@ -1,5 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
+import { defaultMachine } from "@/lib/examples";
+
 import { loadMachine } from "@/store/actions";
 
 type MetaState = {
@@ -9,12 +11,9 @@ type MetaState = {
   updatedAt: number;
 };
 
-const initialState: MetaState = {
-  id: "",
-  title: "",
-  description: "",
-  updatedAt: 0,
-};
+const { id, title, description, updatedAt } = defaultMachine;
+
+const initialState: MetaState = { id, title, description, updatedAt };
 
 const metaSlice = createSlice({
   name: "meta",

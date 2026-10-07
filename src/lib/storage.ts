@@ -1,16 +1,4 @@
-import type { Phase, Token, Transition } from "@/store/tableSlice";
-
-export type SavedMachine = {
-  id: string;
-  title: string;
-  description: string;
-  updatedAt: number;
-  phases: Phase[];
-  tokens: Token[];
-  transitions: Record<string, Record<string, Transition>>;
-  cells: Record<number, string>;
-  head: number;
-};
+import type { SavedMachine } from "@/lib/machine";
 
 const MACHINES_KEY = "turing-visualizer:machines";
 

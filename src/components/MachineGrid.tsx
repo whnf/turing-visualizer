@@ -10,7 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { deleteMachine, type SavedMachine } from "@/lib/storage";
+import type { SavedMachine } from "@/lib/machine";
+import { deleteMachine } from "@/lib/storage";
 import { timeAgo } from "@/lib/time";
 
 export function MachineGrid({ machines }: { machines: SavedMachine[] }) {

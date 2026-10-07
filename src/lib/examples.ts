@@ -1,6 +1,4 @@
-import type { SavedMachine } from "@/lib/storage";
-
-import { BLANK, Move, Q0 } from "@/store/tableSlice";
+import { BLANK, Move, Q0, type SavedMachine } from "@/lib/machine";
 
 const blank = { id: BLANK, name: "_" };
 

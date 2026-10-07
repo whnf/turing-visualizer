@@ -9,9 +9,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { Move } from "@/lib/machine";
+
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
-  Move,
   selectMove,
   selectNextPhase,
   selectNextToken,

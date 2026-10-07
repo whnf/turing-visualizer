@@ -1,9 +1,10 @@
 import { ArrowDown, ArrowUp } from "lucide-react";
 
+import { BLANK } from "@/lib/machine";
 import { cn } from "@/lib/utils";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { BLANK, selectTokenById, selectTokens } from "@/store/tableSlice";
+import { selectTokenById, selectTokens } from "@/store/tableSlice";
 import {
   moveHead,
   selectPresent,

@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 
-import type { SavedMachine } from "@/lib/storage";
+import type { SavedMachine } from "@/lib/machine";
 
 import type { RootState } from "@/store/store";
 import {

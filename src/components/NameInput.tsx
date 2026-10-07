@@ -7,15 +7,10 @@ import {
 
 import { DeletePhase, DeleteToken } from "@/components/DeleteButton";
 
+import { BLANK, Q0, type Phase, type Token } from "@/lib/machine";
+
 import { useAppDispatch } from "@/store/hooks";
-import {
-  BLANK,
-  Q0,
-  renamePhase,
-  renameToken,
-  type Phase,
-  type Token,
-} from "@/store/tableSlice";
+import { renamePhase, renameToken } from "@/store/tableSlice";
 
 function NameInput({
   entity,

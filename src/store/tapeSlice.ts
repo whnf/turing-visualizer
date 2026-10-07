@@ -110,12 +110,18 @@ const tapeSlice = createSlice({
     selectTokenId: (state) => state.present.cells[state.present.head] ?? BLANK,
     selectPresent: (state) => state.present,
     selectStarted: (state) => state.past.length > 0,
+    selectStepCount: (state) => state.past.length,
   },
 });
 
 export const { writeInput, moveHead, step, back, reset } = tapeSlice.actions;
 
-export const { selectPhaseId, selectTokenId, selectPresent, selectStarted } =
-  tapeSlice.selectors;
+export const {
+  selectPhaseId,
+  selectTokenId,
+  selectPresent,
+  selectStarted,
+  selectStepCount,
+} = tapeSlice.selectors;
 
 export default tapeSlice.reducer;

@@ -21,12 +21,20 @@ import {
   setSpeed,
 } from "@/store/runnerSlice";
 import { selectCurrentTransition } from "@/store/selectors";
-import { back, reset, selectStarted, step } from "@/store/tapeSlice";
+import {
+  back,
+  reset,
+  selectStarted,
+  selectStepCount,
+  step,
+} from "@/store/tapeSlice";
 
 export function Controls() {
   const transition = useAppSelector(selectCurrentTransition);
 
   const started = useAppSelector(selectStarted);
+
+  const stepCount = useAppSelector(selectStepCount);
 
   const dispatch = useAppDispatch();
 
@@ -74,7 +82,7 @@ export function Controls() {
 
   return (
     <div className="flex w-full items-center justify-between">
-      <div className="flex-1">
+      <div className="flex flex-1 items-center">
         <Button
           variant="outline"
           onClick={handleReset}
@@ -83,6 +91,9 @@ export function Controls() {
           <RotateCcw />
           Reset
         </Button>
+        <span className="ml-4 text-muted-foreground">
+          {stepCount} step{stepCount !== 1 && "s"}
+        </span>
       </div>
       <ButtonGroup className="flex flex-1 justify-center">
         <Button onClick={handleBack} disabled={!canBack || running}>

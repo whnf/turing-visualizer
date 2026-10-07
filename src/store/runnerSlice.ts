@@ -1,6 +1,10 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
+import { loadSpeed } from "@/lib/storage";
+
 import { loadMachine } from "@/store/actions";
+
+export const SPEEDS = [1, 2, 4, 8];
 
 type RunnerState = {
   running: boolean;
@@ -9,7 +13,7 @@ type RunnerState = {
 
 const initialState: RunnerState = {
   running: false,
-  speed: 1,
+  speed: loadSpeed(),
 };
 
 const runnerSlice = createSlice({

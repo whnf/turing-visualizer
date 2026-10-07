@@ -19,6 +19,7 @@ import {
   selectRunning,
   selectSpeed,
   setSpeed,
+  SPEEDS,
 } from "@/store/runnerSlice";
 import { selectCurrentTransition } from "@/store/selectors";
 import {
@@ -73,7 +74,9 @@ export function Controls() {
   const speed = useAppSelector(selectSpeed);
 
   const handleSpeed = (value: number | readonly number[]) => {
-    dispatch(setSpeed(Array.isArray(value) ? value[0] : value));
+    dispatch(
+      setSpeed(SPEEDS[Array.isArray(value) ? value[0] : value] ?? speed),
+    );
   };
 
   const running = useAppSelector(selectRunning);
@@ -82,7 +85,7 @@ export function Controls() {
 
   return (
     <div className="flex w-full items-center justify-between">
-      <div className="flex flex-1 items-center">
+      <div className="flex flex-1 items-center gap-4">
         <Button
           variant="outline"
           onClick={handleReset}
@@ -91,7 +94,7 @@ export function Controls() {
           <RotateCcw />
           Reset
         </Button>
-        <span className="ml-4 text-muted-foreground">
+        <span className="text-muted-foreground">
           {stepCount} step{stepCount !== 1 && "s"}
         </span>
       </div>
@@ -102,28 +105,23 @@ export function Controls() {
         <Button onClick={handleStep} disabled={!canStep || running}>
           Step <ArrowRightToLine />
         </Button>
-        <Button
-          variant="outline"
-          onClick={!running ? handleRun : handlePause}
-          disabled={!canStep}
-        >
-          {!running ? (
-            <>
-              <Play /> Run
-            </>
-          ) : (
-            <>
-              <SquarePause /> Stop
-            </>
-          )}
-        </Button>
+        {!running ? (
+          <Button variant="outline" onClick={handleRun} disabled={!canStep}>
+            <Play /> Run
+          </Button>
+        ) : (
+          <Button variant="outline" onClick={handlePause} disabled={!canStep}>
+            <SquarePause /> Pause
+          </Button>
+        )}
       </ButtonGroup>
-      <div className="flex flex-1 justify-end">
+      <div className="flex flex-1 items-center justify-end gap-4">
+        <span className="text-muted-foreground">{speed}/s</span>
         <Slider
-          value={[speed]}
+          value={[SPEEDS.indexOf(speed)]}
           onValueChange={handleSpeed}
-          min={1}
-          max={10}
+          min={0}
+          max={SPEEDS.length - 1}
           step={1}
           className="max-w-32"
         />

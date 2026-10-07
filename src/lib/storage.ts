@@ -12,13 +12,13 @@ export type SavedMachine = {
   head: number;
 };
 
-const KEY = "turing-visualizer:machines";
+const MACHINES_KEY = "turing-visualizer:machines";
 
 const read = (): Record<string, SavedMachine> =>
-  JSON.parse(localStorage.getItem(KEY) ?? "{}");
+  JSON.parse(localStorage.getItem(MACHINES_KEY) ?? "{}");
 
 const write = (machines: Record<string, SavedMachine>): void => {
-  localStorage.setItem(KEY, JSON.stringify(machines));
+  localStorage.setItem(MACHINES_KEY, JSON.stringify(machines));
 };
 
 export const listMachines = (): SavedMachine[] => {
@@ -37,4 +37,13 @@ export const deleteMachine = (id: string): void => {
   const machines = read();
   delete machines[id];
   write(machines);
+};
+
+const SPEED_KEY = "turing-visualizer:speed";
+
+export const loadSpeed = (): number =>
+  Number(localStorage.getItem(SPEED_KEY) ?? 1);
+
+export const saveSpeed = (speed: number): void => {
+  localStorage.setItem(SPEED_KEY, String(speed));
 };

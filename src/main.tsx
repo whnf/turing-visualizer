@@ -1,12 +1,17 @@
+import { RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { Provider as StoreProvider } from "react-redux";
 
-import App from "@/App.tsx";
+import { store } from "@/redux/store";
+import { router } from "@/router";
 
 import "@/index.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <StoreProvider store={store}>
+      <RouterProvider router={router} />
+    </StoreProvider>
   </StrictMode>,
 );

@@ -1,4 +1,5 @@
 import { Link, useRouter } from "@tanstack/react-router";
+import { formatDistanceToNowStrict } from "date-fns";
 import { Trash } from "lucide-react";
 
 import { Button } from "@/ui/button";
@@ -12,7 +13,6 @@ import {
 
 import type { SavedMachine } from "@/lib/machine";
 import { deleteMachine } from "@/lib/storage";
-import { timeAgo } from "@/lib/time";
 
 export function MachineCard({ machine }: { machine: SavedMachine }) {
   const router = useRouter();
@@ -47,7 +47,7 @@ export function MachineCard({ machine }: { machine: SavedMachine }) {
             dateTime={updatedAt.toISOString()}
             title={updatedAt.toLocaleString()}
           >
-            {timeAgo(machine.updatedAt)}
+            {formatDistanceToNowStrict(machine.updatedAt, { addSuffix: true })}
           </time>
           <Button
             variant="destructive"

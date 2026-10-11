@@ -2,10 +2,11 @@ import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate } from "@tanstack/react-router";
 import { Save } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/ui/button";
 
 import { defaultMachine, examples } from "@/lib/examples";
 import { getMachine, saveMachine } from "@/lib/storage";
+
 import { selectSavedMachine } from "@/redux/selectors";
 import { useAppSelector } from "@/redux/store";
 

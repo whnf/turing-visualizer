@@ -1,14 +1,14 @@
 import { Link, useRouter } from "@tanstack/react-router";
 import { Trash } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/ui/button";
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/ui/card";
 
 import type { SavedMachine } from "@/lib/machine";
 import { deleteMachine } from "@/lib/storage";

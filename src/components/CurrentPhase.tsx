@@ -1,4 +1,4 @@
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/ui/badge";
 
 import { selectCurrentPhase } from "@/redux/selectors";
 import { useAppSelector } from "@/redux/store";

@@ -1,14 +1,14 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useSyncExternalStore } from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/ui/button";
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/ui/card";
 
 const subscribe = (onChange: () => void) => {
   const interval = setInterval(onChange, 1000);

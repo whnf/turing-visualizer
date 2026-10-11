@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/ui/button";
 import {
   Select,
   SelectContent,
@@ -7,9 +7,10 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/ui/select";
 
 import { Move } from "@/lib/machine";
+
 import {
   selectMove,
   selectNextPhase,

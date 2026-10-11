@@ -1,6 +1,6 @@
 import { SquareDot } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/ui/badge";
 
 import { selectStarted } from "@/redux/reducers/tape";
 import { useAppSelector } from "@/redux/store";

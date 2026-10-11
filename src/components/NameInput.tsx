@@ -1,13 +1,10 @@
-import { Badge } from "@/components/ui/badge";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
+import { Badge } from "@/ui/badge";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/ui/input-group";
 
 import { DeletePhase, DeleteToken } from "@/components/DeleteButton";
 
 import { BLANK, Q0, type Phase, type Token } from "@/lib/machine";
+
 import { renamePhase, renameToken } from "@/redux/reducers/table";
 import { useAppDispatch } from "@/redux/store";
 

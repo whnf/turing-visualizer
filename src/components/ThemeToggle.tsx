@@ -1,6 +1,6 @@
 import { Moon, Sun } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/ui/button";
 
 import { selectTheme, toggleTheme } from "@/redux/reducers/theme";
 import { useAppDispatch, useAppSelector } from "@/redux/store";

@@ -6,11 +6,12 @@ import {
   SquarePause,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
-import { Slider } from "@/components/ui/slider";
+import { Button } from "@/ui/button";
+import { ButtonGroup } from "@/ui/button-group";
+import { Slider } from "@/ui/slider";
 
 import { useRunLoop } from "@/hooks/useRunLoop";
+
 import {
   pause,
   run,

@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PlusIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "@/ui/button";
+import { Separator } from "@/ui/separator";
 
 import { MachineGrid } from "@/components/MachineGrid";
 import { StorageDebug } from "@/components/StorageDebug";

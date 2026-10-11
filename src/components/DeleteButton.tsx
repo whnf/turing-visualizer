@@ -1,6 +1,6 @@
 import { Trash } from "lucide-react";
 
-import { InputGroupButton } from "@/components/ui/input-group";
+import { InputGroupButton } from "@/ui/input-group";
 
 import { removePhase, removeToken } from "@/redux/reducers/table";
 import { useAppDispatch } from "@/redux/store";

@@ -7,7 +7,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/ui/card";
 
 import { AppendPhase, AppendToken } from "@/components/AppendButton";
 import { Controls } from "@/components/Controls";
@@ -20,6 +20,7 @@ import { TransitionTable } from "@/components/TransitionTable";
 
 import { defaultMachine, examples } from "@/lib/examples";
 import { getMachine } from "@/lib/storage";
+
 import { loadMachine } from "@/redux/actions";
 import { store } from "@/redux/store";
 

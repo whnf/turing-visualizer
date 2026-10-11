@@ -1,6 +1,6 @@
 # Turing Visualizer
 
-An interactive visualizer for Turing machines.
+An interactive visualizer for deterministic single-tape Turing machines. Define states, symbols and transitions, write the input on the tape, and step through the run or let it play.
 
 You can check it out [here](https://whnf.github.io/turing-visualizer/)
 
@@ -18,12 +18,6 @@ Clone the repository and run:
 npm install
 npm run dev
 ```
-
-## To Do
-
-- TM Examples
-- Better tape input handling
-- UI improvements
 
 ## License
 

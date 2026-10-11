@@ -74,7 +74,7 @@ const tapeSlice = createSlice({
         [Move.Left]: -1,
         [Move.Stay]: 0,
         [Move.Right]: 1,
-      }[move];
+      }[move ?? Move.Stay];
       state.present.phaseId = nextPhaseId;
     },
     back(state) {

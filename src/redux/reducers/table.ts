@@ -9,7 +9,6 @@ import {
 import {
   BLANK,
   defaultMachine,
-  Move,
   Q0,
   type Phase,
   type Token,
@@ -145,11 +144,7 @@ const tableSlice = createSlice({
       }
 
       if (!state.transitions[phaseId][tokenId]) {
-        state.transitions[phaseId][tokenId] = {
-          nextPhaseId: undefined,
-          nextTokenId: undefined,
-          move: Move.Stay,
-        };
+        state.transitions[phaseId][tokenId] = {};
       }
 
       Object.assign(state.transitions[phaseId][tokenId], changes);

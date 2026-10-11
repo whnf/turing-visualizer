@@ -20,7 +20,7 @@ export enum Move {
 export type Transition = {
   nextPhaseId?: string;
   nextTokenId?: string;
-  move: Move;
+  move?: Move;
 };
 
 export type SavedMachine = {

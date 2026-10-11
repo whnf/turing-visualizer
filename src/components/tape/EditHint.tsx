@@ -5,7 +5,7 @@ import { Badge } from "@/ui/badge";
 import { selectStarted } from "@/redux/reducers/tape";
 import { useAppSelector } from "@/redux/store";
 
-export function TapeEditHint() {
+export function EditHint() {
   const started = useAppSelector(selectStarted);
 
   const handleMouseDown = (e: React.MouseEvent) => {

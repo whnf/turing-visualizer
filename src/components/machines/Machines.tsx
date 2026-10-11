@@ -14,7 +14,7 @@ import type { SavedMachine } from "@/lib/machine";
 import { deleteMachine } from "@/lib/storage";
 import { timeAgo } from "@/lib/time";
 
-export function MachineGrid({ machines }: { machines: SavedMachine[] }) {
+export function Machines({ machines }: { machines: SavedMachine[] }) {
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
       {machines.map((machine) => (

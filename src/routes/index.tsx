@@ -4,7 +4,7 @@ import { PlusIcon } from "lucide-react";
 import { Button } from "@/ui/button";
 import { Separator } from "@/ui/separator";
 
-import { MachineGrid } from "@/components/MachineGrid";
+import { Machines } from "@/components/machines/Machines";
 import { StorageDebug } from "@/components/StorageDebug";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
@@ -39,14 +39,14 @@ function Home() {
             Nothing here yet. Machines you create are saved in this browser.
           </div>
         ) : (
-          <MachineGrid machines={machines} />
+          <Machines machines={machines} />
         )}
       </section>
       <div className="flex items-center text-xs text-muted-foreground">
         EXAMPLES <Separator className="ml-2 shrink" />
       </div>
       <section className="py-6">
-        <MachineGrid machines={Object.values(examples)} />
+        <Machines machines={Object.values(examples)} />
       </section>
       {import.meta.env.DEV && <StorageDebug />}
     </div>

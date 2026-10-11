@@ -1,14 +1,14 @@
-import { PhaseNameInput, TokenNameInput } from "@/components/NameInput";
+import { PhaseNameInput, TokenNameInput } from "@/components/table/NameInput";
 import {
   MoveButton,
   NextPhaseSelect,
   NextTokenSelect,
-} from "@/components/TransitionSelect";
+} from "@/components/table/TransitionSelect";
 
 import { selectPhases, selectTokens } from "@/redux/reducers/table";
 import { useAppSelector } from "@/redux/store";
 
-export function TransitionTable() {
+export function Table() {
   const phases = useAppSelector(selectPhases);
   const tokens = useAppSelector(selectTokens);
 

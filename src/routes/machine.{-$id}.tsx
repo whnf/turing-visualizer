@@ -9,14 +9,14 @@ import {
   CardTitle,
 } from "@/ui/card";
 
-import { AppendPhase, AppendToken } from "@/components/AppendButton";
-import { Controls } from "@/components/Controls";
-import { CurrentPhase } from "@/components/CurrentPhase";
 import { StorageDebug } from "@/components/StorageDebug";
-import { Tape } from "@/components/Tape";
-import { TapeEditHint } from "@/components/TapeEditHint";
-import { Toolbar } from "@/components/Toolbar";
-import { TransitionTable } from "@/components/TransitionTable";
+import { AppendPhase, AppendToken } from "@/components/table/AppendButton";
+import { Table } from "@/components/table/Table";
+import { Controls } from "@/components/tape/Controls";
+import { CurrentPhase } from "@/components/tape/CurrentPhase";
+import { EditHint } from "@/components/tape/EditHint";
+import { Tape } from "@/components/tape/Tape";
+import { Toolbar } from "@/components/toolbar/Toolbar";
 
 import { defaultMachine, examples } from "@/lib/examples";
 import { getMachine } from "@/lib/storage";
@@ -32,7 +32,7 @@ function Machine() {
         <CardHeader className="grid-cols-[1fr_auto_1fr] border-b">
           <CardTitle>Tape</CardTitle>
           <CurrentPhase />
-          <TapeEditHint />
+          <EditHint />
         </CardHeader>
         <CardContent className="px-0">
           <Tape />
@@ -50,7 +50,7 @@ function Machine() {
           </CardAction>
         </CardHeader>
         <CardContent className="overflow-x-auto p-0">
-          <TransitionTable />
+          <Table />
         </CardContent>
       </Card>
       {import.meta.env.DEV && <StorageDebug />}

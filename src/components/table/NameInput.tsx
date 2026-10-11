@@ -1,7 +1,7 @@
 import { Badge } from "@/ui/badge";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/ui/input-group";
 
-import { DeletePhase, DeleteToken } from "@/components/DeleteButton";
+import { DeletePhase, DeleteToken } from "@/components/table/DeleteButton";
 
 import { BLANK, Q0, type Phase, type Token } from "@/lib/machine";
 

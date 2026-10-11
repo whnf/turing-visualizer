@@ -60,10 +60,8 @@ function Machine() {
 }
 
 export const Route = createFileRoute("/machine/{-$id}")({
-  loader: ({ params: { id } }) => {
-    const machine = id
-      ? (loadMachine(id) ?? examples[id] ?? defaultMachine)
-      : defaultMachine;
+  loader: ({ params: { id = "" } }) => {
+    const machine = loadMachine(id) ?? examples[id] ?? defaultMachine;
 
     store.dispatch(openMachine(machine));
   },

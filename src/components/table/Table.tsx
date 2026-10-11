@@ -1,6 +1,6 @@
+import { MoveButton } from "@/components/table/MoveButton";
 import { PhaseNameInput, TokenNameInput } from "@/components/table/NameInput";
 import {
-  MoveButton,
   NextPhaseSelect,
   NextTokenSelect,
 } from "@/components/table/TransitionSelect";

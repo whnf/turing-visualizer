@@ -4,7 +4,8 @@ import { Save } from "lucide-react";
 
 import { Button } from "@/ui/button";
 
-import { defaultMachine, examples } from "@/lib/examples";
+import { examples } from "@/lib/examples";
+import { defaultMachine } from "@/lib/machine";
 import { getMachine, saveMachine } from "@/lib/storage";
 
 import { selectSavedMachine } from "@/redux/selectors";

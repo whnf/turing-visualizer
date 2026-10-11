@@ -18,7 +18,8 @@ import { EditHint } from "@/components/tape/EditHint";
 import { Tape } from "@/components/tape/Tape";
 import { Toolbar } from "@/components/toolbar/Toolbar";
 
-import { defaultMachine, examples } from "@/lib/examples";
+import { examples } from "@/lib/examples";
+import { defaultMachine } from "@/lib/machine";
 import { getMachine } from "@/lib/storage";
 
 import { loadMachine } from "@/redux/actions";

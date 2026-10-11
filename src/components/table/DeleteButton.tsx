@@ -2,7 +2,7 @@ import { Trash } from "lucide-react";
 
 import { InputGroupButton } from "@/ui/input-group";
 
-import { removePhase, removeToken } from "@/redux/reducers/table";
+import { deletePhase, deleteToken } from "@/redux/reducers/table";
 import { useAppDispatch } from "@/redux/store";
 
 function DeleteButton({
@@ -10,7 +10,7 @@ function DeleteButton({
   deleteAction,
 }: {
   id: string;
-  deleteAction: typeof removePhase | typeof removeToken;
+  deleteAction: typeof deletePhase | typeof deleteToken;
 }) {
   const dispatch = useAppDispatch();
 
@@ -30,9 +30,9 @@ function DeleteButton({
 }
 
 export function DeletePhase({ id }: { id: string }) {
-  return <DeleteButton id={id} deleteAction={removePhase} />;
+  return <DeleteButton id={id} deleteAction={deletePhase} />;
 }
 
 export function DeleteToken({ id }: { id: string }) {
-  return <DeleteButton id={id} deleteAction={removeToken} />;
+  return <DeleteButton id={id} deleteAction={deleteToken} />;
 }

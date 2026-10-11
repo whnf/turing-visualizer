@@ -6,9 +6,9 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 
-import { defaultMachine } from "@/lib/examples";
 import {
   BLANK,
+  defaultMachine,
   Move,
   Q0,
   type Phase,
@@ -62,7 +62,7 @@ const tableSlice = createSlice({
   name: "table",
   initialState,
   reducers: {
-    addPhase: {
+    appendPhase: {
       reducer(state, action: PayloadAction<string>) {
         phasesAdapter.addOne(state.phases, {
           id: action.payload,
@@ -78,7 +78,7 @@ const tableSlice = createSlice({
 
       phasesAdapter.updateOne(state.phases, { id, changes: { name } });
     },
-    removePhase(state, action: PayloadAction<string>) {
+    deletePhase(state, action: PayloadAction<string>) {
       const id = action.payload;
 
       if (id === Q0) {
@@ -96,7 +96,7 @@ const tableSlice = createSlice({
         }
       }
     },
-    addToken: {
+    appendToken: {
       reducer(state, action: PayloadAction<string>) {
         tokensAdapter.addOne(state.tokens, {
           id: action.payload,
@@ -112,7 +112,7 @@ const tableSlice = createSlice({
 
       tokensAdapter.updateOne(state.tokens, { id, changes: { name } });
     },
-    removeToken(state, action: PayloadAction<string>) {
+    deleteToken(state, action: PayloadAction<string>) {
       const id = action.payload;
 
       if (id === BLANK) {
@@ -191,12 +191,12 @@ const tableSlice = createSlice({
 });
 
 export const {
-  addPhase,
+  appendPhase,
   renamePhase,
-  removePhase,
-  addToken,
+  deletePhase,
+  appendToken,
   renameToken,
-  removeToken,
+  deleteToken,
   setTransition,
 } = tableSlice.actions;
 

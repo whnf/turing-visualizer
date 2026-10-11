@@ -1,13 +1,13 @@
 import { Button } from "@/ui/button";
 
-import { addPhase, addToken } from "@/redux/reducers/table";
+import { appendPhase, appendToken } from "@/redux/reducers/table";
 import { useAppDispatch } from "@/redux/store";
 
 function AppendButton({
   appendAction,
   label,
 }: {
-  appendAction: typeof addPhase | typeof addToken;
+  appendAction: typeof appendPhase | typeof appendToken;
   label: string;
 }) {
   const dispatch = useAppDispatch();
@@ -20,9 +20,9 @@ function AppendButton({
 }
 
 export function AppendPhase() {
-  return <AppendButton appendAction={addPhase} label="Add State" />;
+  return <AppendButton appendAction={appendPhase} label="Add State" />;
 }
 
 export function AppendToken() {
-  return <AppendButton appendAction={addToken} label="Add Symbol" />;
+  return <AppendButton appendAction={appendToken} label="Add Symbol" />;
 }

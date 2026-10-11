@@ -34,3 +34,23 @@ export type SavedMachine = {
   cells: Record<number, string>;
   head: number;
 };
+
+export const defaultMachine: SavedMachine = {
+  id: "",
+  title: "",
+  description: "",
+  updatedAt: 0,
+  phases: [
+    { id: Q0, name: "q0" },
+    { id: "qa", name: "qa" },
+    { id: "qr", name: "qr" },
+  ],
+  tokens: [
+    { id: BLANK, name: "_" },
+    { id: "t0", name: "0" },
+    { id: "tX", name: "X" },
+  ],
+  transitions: {},
+  cells: {},
+  head: 0,
+};

@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import { defaultMachine } from "@/lib/examples";
+import { defaultMachine } from "@/lib/machine";
 
 import { loadMachine } from "@/redux/actions";
 

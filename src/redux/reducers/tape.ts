@@ -1,10 +1,15 @@
 import { createSlice, current, type PayloadAction } from "@reduxjs/toolkit";
 
-import { defaultMachine } from "@/lib/examples";
-import { BLANK, Move, Q0, type Transition } from "@/lib/machine";
+import {
+  BLANK,
+  defaultMachine,
+  Move,
+  Q0,
+  type Transition,
+} from "@/lib/machine";
 
 import { loadMachine } from "@/redux/actions";
-import { removeToken } from "@/redux/reducers/table";
+import { deleteToken } from "@/redux/reducers/table";
 
 export type Run = {
   cells: Record<number, string>;
@@ -92,7 +97,7 @@ const tapeSlice = createSlice({
         state.past = [];
         state.present = { cells, head, phaseId: Q0 };
       })
-      .addCase(removeToken, (state, action) => {
+      .addCase(deleteToken, (state, action) => {
         for (const { cells } of [state.present, ...state.past]) {
           for (const [index, id] of Object.entries(cells)) {
             if (id === action.payload) {

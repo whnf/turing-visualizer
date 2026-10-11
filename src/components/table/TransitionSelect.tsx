@@ -1,4 +1,3 @@
-import { Button } from "@/ui/button";
 import {
   Select,
   SelectContent,
@@ -9,10 +8,7 @@ import {
   SelectValue,
 } from "@/ui/select";
 
-import { Move } from "@/lib/machine";
-
 import {
-  selectMove,
   selectNextPhase,
   selectNextToken,
   selectPhases,
@@ -120,40 +116,5 @@ export function NextTokenSelect({
       selectNext={selectNextToken}
       selectAll={selectTokens}
     />
-  );
-}
-
-export function MoveButton({
-  phaseId,
-  tokenId,
-}: {
-  phaseId: string;
-  tokenId: string;
-}) {
-  const dispatch = useAppDispatch();
-
-  const move = useAppSelector((state) => selectMove(state, phaseId, tokenId));
-
-  const handleClick = () => {
-    const nextMoves: Record<Move, Move> = {
-      [Move.Left]: Move.Stay,
-      [Move.Stay]: Move.Right,
-      [Move.Right]: Move.Left,
-    };
-    const nextMove = nextMoves[move ?? Move.Stay];
-
-    dispatch(
-      setTransition({
-        phaseId,
-        tokenId,
-        changes: { move: nextMove },
-      }),
-    );
-  };
-
-  return (
-    <Button onClick={handleClick} variant="outline" className="h-full w-10">
-      {move ?? Move.Stay}
-    </Button>
   );
 }

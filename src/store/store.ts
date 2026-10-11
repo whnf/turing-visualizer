@@ -1,18 +1,11 @@
-import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 
-import { saveSpeed } from "@/lib/storage";
-
+import { listener } from "@/store/listeners";
 import metaReducer from "@/store/metaSlice";
-import runnerReducer, { setSpeed } from "@/store/runnerSlice";
+import runnerReducer from "@/store/runnerSlice";
 import tableReducer from "@/store/tableSlice";
 import tapeReducer from "@/store/tapeSlice";
-
-const listener = createListenerMiddleware();
-
-listener.startListening({
-  actionCreator: setSpeed,
-  effect: ({ payload }) => saveSpeed(payload),
-});
+import themeReducer from "@/store/themeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +13,7 @@ export const store = configureStore({
     runner: runnerReducer,
     table: tableReducer,
     tape: tapeReducer,
+    theme: themeReducer,
   },
   middleware: (getDefault) => getDefault().prepend(listener.middleware),
 });

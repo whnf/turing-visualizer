@@ -2,9 +2,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 import { loadSpeed } from "@/lib/storage";
 
-import { loadMachine } from "@/redux/actions";
-
-export const SPEEDS = [1, 2, 4, 8];
+import { openMachine } from "@/redux/actions";
 
 type RunnerState = {
   running: boolean;
@@ -31,7 +29,7 @@ const runnerSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(loadMachine, (state) => {
+    builder.addCase(openMachine, (state) => {
       state.running = false;
     });
   },

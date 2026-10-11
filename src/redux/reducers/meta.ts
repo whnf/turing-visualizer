@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 import { defaultMachine } from "@/lib/machine";
 
-import { loadMachine } from "@/redux/actions";
+import { openMachine } from "@/redux/actions";
 
 type MetaState = {
   id: string;
@@ -27,13 +27,14 @@ const metaSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(loadMachine, (state, action) => {
+    builder.addCase(openMachine, (state, action) => {
       const { id, title, description, updatedAt } = action.payload;
 
       Object.assign(state, { id, title, description, updatedAt });
     });
   },
   selectors: {
+    selectMeta: (state) => state,
     selectTitle: (state) => state.title,
     selectDescription: (state) => state.description,
   },
@@ -41,6 +42,7 @@ const metaSlice = createSlice({
 
 export const { setTitle, setDescription } = metaSlice.actions;
 
-export const { selectTitle, selectDescription } = metaSlice.selectors;
+export const { selectMeta, selectTitle, selectDescription } =
+  metaSlice.selectors;
 
 export default metaSlice.reducer;

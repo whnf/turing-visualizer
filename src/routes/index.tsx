@@ -9,7 +9,7 @@ import { StorageDebug } from "@/components/StorageDebug";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 import { examples } from "@/lib/examples";
-import { listMachines } from "@/lib/storage";
+import { loadMachines } from "@/lib/storage";
 
 function Home() {
   const machines = Route.useLoaderData();
@@ -54,6 +54,6 @@ function Home() {
 }
 
 export const Route = createFileRoute("/")({
-  loader: () => listMachines(),
+  loader: () => loadMachines(),
   component: Home,
 });

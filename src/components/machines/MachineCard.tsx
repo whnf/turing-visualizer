@@ -11,10 +11,10 @@ import {
   CardTitle,
 } from "@/ui/card";
 
-import type { SavedMachine } from "@/lib/machine";
+import type { Machine } from "@/lib/machine";
 import { deleteMachine } from "@/lib/storage";
 
-export function MachineCard({ machine }: { machine: SavedMachine }) {
+export function MachineCard({ machine }: { machine: Machine }) {
   const router = useRouter();
 
   const updatedAt = new Date(machine.updatedAt);

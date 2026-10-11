@@ -1,7 +1,8 @@
 import { createSelector } from "@reduxjs/toolkit";
 
-import type { SavedMachine } from "@/lib/machine";
+import type { Machine } from "@/lib/machine";
 
+import { selectMeta } from "@/redux/reducers/meta";
 import {
   selectPhaseById,
   selectPhases,
@@ -9,27 +10,32 @@ import {
   selectTransition,
   selectTransitions,
 } from "@/redux/reducers/table";
-import { selectPhaseId, selectTokenId } from "@/redux/reducers/tape";
+import {
+  selectCurrentPhaseId,
+  selectCurrentTokenId,
+  selectInitialConfiguration,
+} from "@/redux/reducers/tape";
 import type { RootState } from "@/redux/store";
 
-export const selectInput = (state: RootState) =>
-  state.tape.past[0] ?? state.tape.present;
-
 export const selectCurrentPhase = (state: RootState) =>
-  selectPhaseById(state, selectPhaseId(state));
+  selectPhaseById(state, selectCurrentPhaseId(state));
 
 export const selectCurrentTransition = (state: RootState) =>
-  selectTransition(state, selectPhaseId(state), selectTokenId(state));
+  selectTransition(
+    state,
+    selectCurrentPhaseId(state),
+    selectCurrentTokenId(state),
+  );
 
-export const selectSavedMachine = createSelector(
+export const selectMachine = createSelector(
   [
-    (state: RootState) => state.meta,
+    selectMeta,
     selectPhases,
     selectTokens,
     selectTransitions,
-    selectInput,
+    selectInitialConfiguration,
   ],
-  (meta, phases, tokens, transitions, { cells, head }): SavedMachine => ({
+  (meta, phases, tokens, transitions, { cells, head }): Machine => ({
     ...meta,
     phases,
     tokens,

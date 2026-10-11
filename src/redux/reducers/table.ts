@@ -15,9 +15,9 @@ import {
   type Transition,
 } from "@/lib/machine";
 
-import { loadMachine } from "@/redux/actions";
+import { openMachine } from "@/redux/actions";
 
-export type TableState = {
+type TableState = {
   phases: EntityState<Phase, string>;
   tokens: EntityState<Token, string>;
   transitions: Record<string, Record<string, Transition>>;
@@ -151,7 +151,7 @@ const tableSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(loadMachine, (state, action) => {
+    builder.addCase(openMachine, (state, action) => {
       phasesAdapter.setAll(state.phases, action.payload.phases);
       tokensAdapter.setAll(state.tokens, action.payload.tokens);
       state.transitions = action.payload.transitions;

@@ -6,20 +6,20 @@ import { Button } from "@/ui/button";
 
 import { examples } from "@/lib/examples";
 import { defaultMachine } from "@/lib/machine";
-import { getMachine, saveMachine } from "@/lib/storage";
+import { loadMachine, saveMachine } from "@/lib/storage";
 
-import { selectSavedMachine } from "@/redux/selectors";
+import { selectMachine } from "@/redux/selectors";
 import { useAppSelector } from "@/redux/store";
 
 export function SaveButton() {
   const navigate = useNavigate();
 
-  const machine = useAppSelector(selectSavedMachine);
+  const machine = useAppSelector(selectMachine);
 
-  const original = machine.id ? getMachine(machine.id) : defaultMachine;
+  const original = machine.id ? loadMachine(machine.id) : defaultMachine;
   const saved = JSON.stringify(machine) === JSON.stringify(original);
 
-  const handleSave = () => {
+  const handleClick = () => {
     const id = machine.id || nanoid();
 
     saveMachine({ ...machine, id, updatedAt: Date.now() });
@@ -29,7 +29,7 @@ export function SaveButton() {
   return (
     <Button
       variant="outline"
-      onClick={handleSave}
+      onClick={handleClick}
       disabled={saved || machine.id in examples}
     >
       <Save /> Save

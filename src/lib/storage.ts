@@ -1,4 +1,4 @@
-import type { SavedMachine } from "@/lib/machine";
+import type { Machine } from "@/lib/machine";
 
 const read = <T>(key: string, fallback: T): T => {
   const raw = localStorage.getItem(key);
@@ -12,19 +12,19 @@ const write = (key: string, value: unknown): void => {
 
 const MACHINES_KEY = "turing-visualizer:machines";
 
-const readMachines = () => read<Record<string, SavedMachine>>(MACHINES_KEY, {});
+const readMachines = () => read<Record<string, Machine>>(MACHINES_KEY, {});
 
-export const listMachines = (): SavedMachine[] => {
+export const loadMachines = (): Machine[] => {
   return Object.values(readMachines()).sort(
     (a, b) => b.updatedAt - a.updatedAt,
   );
 };
 
-export const getMachine = (id: string): SavedMachine | undefined => {
+export const loadMachine = (id: string): Machine | undefined => {
   return readMachines()[id];
 };
 
-export const saveMachine = (machine: SavedMachine): void => {
+export const saveMachine = (machine: Machine): void => {
   write(MACHINES_KEY, { ...readMachines(), [machine.id]: machine });
 };
 

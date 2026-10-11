@@ -1,7 +1,9 @@
 import { Slider } from "@/ui/slider";
 
-import { selectSpeed, setSpeed, SPEEDS } from "@/redux/reducers/runner";
+import { selectSpeed, setSpeed } from "@/redux/reducers/runner";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
+
+const SPEEDS = [1, 2, 4, 8];
 
 export function SpeedSlider() {
   const dispatch = useAppDispatch();

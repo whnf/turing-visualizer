@@ -21,7 +21,7 @@ function NameInput({
 }) {
   const dispatch = useAppDispatch();
 
-  const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     dispatch(renameAction({ id: entity.id, name: e.target.value }));
   };
 

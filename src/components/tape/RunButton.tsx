@@ -9,7 +9,7 @@ import {
   selectRunning,
   selectSpeed,
 } from "@/redux/reducers/runner";
-import { selectPresent, step } from "@/redux/reducers/tape";
+import { selectCurrentConfiguration, step } from "@/redux/reducers/tape";
 import { selectCurrentTransition } from "@/redux/selectors";
 import { useAppDispatch, useAppSelector, useAppStore } from "@/redux/store";
 
@@ -17,9 +17,9 @@ export function RunButton() {
   const dispatch = useAppDispatch();
   const store = useAppStore();
 
-  const present = useAppSelector(selectPresent);
   const running = useAppSelector(selectRunning);
   const transition = useAppSelector(selectCurrentTransition);
+  const configuration = useAppSelector(selectCurrentConfiguration);
 
   const canStep = !!transition?.nextPhaseId;
 
@@ -36,7 +36,7 @@ export function RunButton() {
     const delay = 1000 / selectSpeed(store.getState());
     const id = setTimeout(() => dispatch(step(transition)), delay);
     return () => clearTimeout(id);
-  }, [dispatch, store, present, running, canStep, transition]);
+  }, [dispatch, store, running, canStep, transition, configuration]);
 
   const handleRun = () => {
     if (canStep) {

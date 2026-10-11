@@ -23,7 +23,7 @@ export type Transition = {
   move?: Move;
 };
 
-export type SavedMachine = {
+export type Machine = {
   id: string;
   title: string;
   description: string;
@@ -35,7 +35,7 @@ export type SavedMachine = {
   head: number;
 };
 
-export const defaultMachine: SavedMachine = {
+export const defaultMachine: Machine = {
   id: "",
   title: "",
   description: "",

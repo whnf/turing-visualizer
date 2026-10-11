@@ -20,9 +20,9 @@ import { Toolbar } from "@/components/toolbar/Toolbar";
 
 import { examples } from "@/lib/examples";
 import { defaultMachine } from "@/lib/machine";
-import { getMachine } from "@/lib/storage";
+import { loadMachine } from "@/lib/storage";
 
-import { loadMachine } from "@/redux/actions";
+import { openMachine } from "@/redux/actions";
 import { store } from "@/redux/store";
 
 function Machine() {
@@ -62,10 +62,10 @@ function Machine() {
 export const Route = createFileRoute("/machine/{-$id}")({
   loader: ({ params: { id } }) => {
     const machine = id
-      ? (getMachine(id) ?? examples[id] ?? defaultMachine)
+      ? (loadMachine(id) ?? examples[id] ?? defaultMachine)
       : defaultMachine;
 
-    store.dispatch(loadMachine(machine));
+    store.dispatch(openMachine(machine));
   },
   component: Machine,
 });

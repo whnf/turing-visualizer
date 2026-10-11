@@ -8,18 +8,18 @@ import {
   type Transition,
 } from "@/lib/machine";
 
-import { loadMachine } from "@/redux/actions";
+import { openMachine } from "@/redux/actions";
 import { deleteToken } from "@/redux/reducers/table";
 
-export type Run = {
+type Configuration = {
   cells: Record<number, string>;
   head: number;
   phaseId: string;
 };
 
-export type TapeState = {
-  past: Run[];
-  present: Run;
+type TapeState = {
+  past: Configuration[];
+  present: Configuration;
 };
 
 const initialState: TapeState = {
@@ -46,7 +46,7 @@ const tapeSlice = createSlice({
         state.present.cells[state.present.head] = action.payload;
       }
     },
-    moveHead(state, action: PayloadAction<number>) {
+    setHead(state, action: PayloadAction<number>) {
       if (state.past.length > 0) {
         return;
       }
@@ -91,7 +91,7 @@ const tapeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loadMachine, (state, action) => {
+      .addCase(openMachine, (state, action) => {
         const { cells, head } = action.payload;
 
         state.past = [];
@@ -108,20 +108,23 @@ const tapeSlice = createSlice({
       });
   },
   selectors: {
-    selectPhaseId: (state) => state.present.phaseId,
-    selectTokenId: (state) => state.present.cells[state.present.head] ?? BLANK,
-    selectPresent: (state) => state.present,
+    selectCurrentPhaseId: (state) => state.present.phaseId,
+    selectCurrentTokenId: (state) =>
+      state.present.cells[state.present.head] ?? BLANK,
+    selectCurrentConfiguration: (state) => state.present,
+    selectInitialConfiguration: (state) => state.past[0] ?? state.present,
     selectStarted: (state) => state.past.length > 0,
     selectStepCount: (state) => state.past.length,
   },
 });
 
-export const { writeInput, moveHead, step, back, reset } = tapeSlice.actions;
+export const { writeInput, setHead, step, back, reset } = tapeSlice.actions;
 
 export const {
-  selectPhaseId,
-  selectTokenId,
-  selectPresent,
+  selectCurrentPhaseId,
+  selectCurrentTokenId,
+  selectCurrentConfiguration,
+  selectInitialConfiguration,
   selectStarted,
   selectStepCount,
 } = tapeSlice.selectors;

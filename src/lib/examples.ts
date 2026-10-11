@@ -1,6 +1,6 @@
-import { BLANK, Move, Q0, type SavedMachine } from "@/lib/machine";
+import { BLANK, Move, Q0, type Machine } from "@/lib/machine";
 
-export const examples: Record<string, SavedMachine> = {
+export const examples: Record<string, Machine> = {
   "binary-increment": {
     id: "binary-increment",
     title: "Binary increment",

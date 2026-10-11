@@ -1,8 +1,8 @@
 import { MachineCard } from "@/components/machines/MachineCard";
 
-import type { SavedMachine } from "@/lib/machine";
+import type { Machine } from "@/lib/machine";
 
-export function Machines({ machines }: { machines: SavedMachine[] }) {
+export function Machines({ machines }: { machines: Machine[] }) {
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
       {machines.map((machine) => (

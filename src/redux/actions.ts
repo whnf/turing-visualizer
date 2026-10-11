@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
 
-import type { SavedMachine } from "@/lib/machine";
+import type { Machine } from "@/lib/machine";
 
-export const loadMachine = createAction<SavedMachine>("machine/load");
+export const openMachine = createAction<Machine>("machine/open");

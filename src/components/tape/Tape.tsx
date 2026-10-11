@@ -5,9 +5,9 @@ import { BLANK } from "@/lib/machine";
 
 import { selectTokenById, selectTokens } from "@/redux/reducers/table";
 import {
-  moveHead,
-  selectPresent,
+  selectCurrentConfiguration,
   selectStarted,
+  setHead,
   writeInput,
 } from "@/redux/reducers/tape";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
@@ -19,10 +19,9 @@ const HALF = 40;
 export function Tape() {
   const dispatch = useAppDispatch();
 
+  const { cells, head } = useAppSelector(selectCurrentConfiguration);
   const tokens = useAppSelector(selectTokens);
-  const present = useAppSelector(selectPresent);
   const started = useAppSelector(selectStarted);
-  const { head } = present;
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.ctrlKey || e.metaKey || e.altKey) {
@@ -31,14 +30,12 @@ export function Tape() {
 
     switch (e.key) {
       case "ArrowLeft":
-        dispatch(moveHead(head - 1));
+        dispatch(setHead(head - 1));
         break;
       case "ArrowRight":
-        dispatch(moveHead(head + 1));
+        dispatch(setHead(head + 1));
         break;
       case "Backspace":
-        dispatch(writeInput(BLANK));
-        break;
       case "Delete":
       case " ":
         dispatch(writeInput(BLANK));
@@ -79,7 +76,7 @@ export function Tape() {
           {indices.map((i) => (
             <Cell
               key={i}
-              tokenId={present.cells[i] ?? BLANK}
+              tokenId={cells[i] ?? BLANK}
               index={i}
               active={!started && i === head}
               style={{ left: i * PITCH }}
@@ -108,7 +105,7 @@ function Cell({
   const token = useAppSelector((state) => selectTokenById(state, tokenId));
 
   const handleClick = () => {
-    dispatch(moveHead(index));
+    dispatch(setHead(index));
   };
 
   return (

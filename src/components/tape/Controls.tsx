@@ -1,129 +1,26 @@
-import {
-  ArrowLeftToLine,
-  ArrowRightToLine,
-  Play,
-  RotateCcw,
-  SquarePause,
-} from "lucide-react";
-
-import { Button } from "@/ui/button";
 import { ButtonGroup } from "@/ui/button-group";
-import { Slider } from "@/ui/slider";
 
-import { useRunLoop } from "@/hooks/useRunLoop";
-
-import {
-  pause,
-  run,
-  selectRunning,
-  selectSpeed,
-  setSpeed,
-  SPEEDS,
-} from "@/redux/reducers/runner";
-import {
-  back,
-  reset,
-  selectStarted,
-  selectStepCount,
-  step,
-} from "@/redux/reducers/tape";
-import { selectCurrentTransition } from "@/redux/selectors";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { BackButton } from "@/components/tape/BackButton";
+import { ResetButton } from "@/components/tape/ResetButton";
+import { RunButton } from "@/components/tape/RunButton";
+import { SpeedSlider } from "@/components/tape/SpeedSlider";
+import { StepButton } from "@/components/tape/StepButton";
+import { StepCount } from "@/components/tape/StepCount";
 
 export function Controls() {
-  const transition = useAppSelector(selectCurrentTransition);
-
-  const started = useAppSelector(selectStarted);
-
-  const stepCount = useAppSelector(selectStepCount);
-
-  const dispatch = useAppDispatch();
-
-  const handleReset = () => {
-    if (started) {
-      dispatch(reset());
-    }
-  };
-
-  const handleBack = () => {
-    if (started) {
-      dispatch(back());
-    }
-  };
-
-  const canStep = !!transition?.nextPhaseId;
-
-  const handleStep = () => {
-    if (canStep) {
-      dispatch(step(transition));
-    }
-  };
-
-  const handleRun = () => {
-    if (canStep) {
-      dispatch(step(transition));
-      dispatch(run());
-    }
-  };
-
-  const handlePause = () => {
-    dispatch(pause());
-  };
-
-  const speed = useAppSelector(selectSpeed);
-
-  const handleSpeed = (value: number | readonly number[]) => {
-    dispatch(
-      setSpeed(SPEEDS[Array.isArray(value) ? value[0] : value] ?? speed),
-    );
-  };
-
-  const running = useAppSelector(selectRunning);
-
-  useRunLoop();
-
   return (
     <div className="flex w-full items-center justify-between">
       <div className="flex flex-1 items-center gap-4">
-        <Button
-          variant="outline"
-          onClick={handleReset}
-          disabled={!started || running}
-        >
-          <RotateCcw />
-          Reset
-        </Button>
-        <span className="text-muted-foreground">
-          {stepCount} step{stepCount !== 1 && "s"}
-        </span>
+        <ResetButton />
+        <StepCount />
       </div>
       <ButtonGroup className="flex flex-1 justify-center">
-        <Button onClick={handleBack} disabled={!started || running}>
-          <ArrowLeftToLine /> Back
-        </Button>
-        <Button onClick={handleStep} disabled={!canStep || running}>
-          Step <ArrowRightToLine />
-        </Button>
-        {!running ? (
-          <Button variant="outline" onClick={handleRun} disabled={!canStep}>
-            <Play /> Run
-          </Button>
-        ) : (
-          <Button variant="outline" onClick={handlePause} disabled={!canStep}>
-            <SquarePause /> Pause
-          </Button>
-        )}
+        <BackButton />
+        <StepButton />
+        <RunButton />
       </ButtonGroup>
       <div className="flex flex-1 items-center justify-end gap-4">
-        <span className="text-muted-foreground">{speed}/s</span>
-        <Slider
-          value={[SPEEDS.indexOf(speed)]}
-          onValueChange={handleSpeed}
-          min={0}
-          max={SPEEDS.length - 1}
-          step={1}
-          className="max-w-32"
-        />
+        <SpeedSlider />
       </div>
     </div>
   );

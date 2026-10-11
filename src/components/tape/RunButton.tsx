@@ -18,8 +18,8 @@ export function RunButton() {
   const store = useAppStore();
 
   const present = useAppSelector(selectPresent);
-  const transition = useAppSelector(selectCurrentTransition);
   const running = useAppSelector(selectRunning);
+  const transition = useAppSelector(selectCurrentTransition);
 
   const canStep = !!transition?.nextPhaseId;
 
@@ -28,7 +28,7 @@ export function RunButton() {
       return;
     }
 
-    if (!transition?.nextPhaseId) {
+    if (!canStep) {
       dispatch(pause());
       return;
     }
@@ -36,7 +36,7 @@ export function RunButton() {
     const delay = 1000 / selectSpeed(store.getState());
     const id = setTimeout(() => dispatch(step(transition)), delay);
     return () => clearTimeout(id);
-  }, [running, present, transition, dispatch, store]);
+  }, [dispatch, store, present, running, canStep, transition]);
 
   const handleRun = () => {
     if (canStep) {

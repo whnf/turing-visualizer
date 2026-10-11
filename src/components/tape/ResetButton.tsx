@@ -13,9 +13,7 @@ export function ResetButton() {
   const running = useAppSelector(selectRunning);
 
   const handleClick = () => {
-    if (started) {
-      dispatch(reset());
-    }
+    dispatch(reset());
   };
 
   return (

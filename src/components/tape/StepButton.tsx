@@ -10,8 +10,8 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 export function StepButton() {
   const dispatch = useAppDispatch();
 
-  const transition = useAppSelector(selectCurrentTransition);
   const running = useAppSelector(selectRunning);
+  const transition = useAppSelector(selectCurrentTransition);
 
   const canStep = !!transition?.nextPhaseId;
 

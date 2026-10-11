@@ -17,13 +17,12 @@ const PITCH = CELL + 8;
 const HALF = 40;
 
 export function Tape() {
-  const tokens = useAppSelector(selectTokens);
+  const dispatch = useAppDispatch();
 
+  const tokens = useAppSelector(selectTokens);
   const present = useAppSelector(selectPresent);
   const started = useAppSelector(selectStarted);
   const { head } = present;
-
-  const dispatch = useAppDispatch();
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.ctrlKey || e.metaKey || e.altKey) {
@@ -104,9 +103,9 @@ function Cell({
   active: boolean;
   style: React.CSSProperties;
 }) {
-  const token = useAppSelector((s) => selectTokenById(s, tokenId));
-
   const dispatch = useAppDispatch();
+
+  const token = useAppSelector((state) => selectTokenById(state, tokenId));
 
   const handleClick = () => {
     dispatch(moveHead(index));

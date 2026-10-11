@@ -6,5 +6,9 @@ import { useAppSelector } from "@/redux/store";
 export function CurrentPhase() {
   const phase = useAppSelector(selectCurrentPhase);
 
-  return <Badge variant="secondary">{phase?.name}</Badge>;
+  if (!phase) {
+    return <Badge variant="destructive">No state</Badge>;
+  }
+
+  return <Badge variant="secondary">{phase.name}</Badge>;
 }

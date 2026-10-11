@@ -13,9 +13,7 @@ export function BackButton() {
   const running = useAppSelector(selectRunning);
 
   const handleClick = () => {
-    if (started) {
-      dispatch(back());
-    }
+    dispatch(back());
   };
 
   return (

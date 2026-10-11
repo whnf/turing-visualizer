@@ -1,10 +1,9 @@
 import { createListenerMiddleware } from "@reduxjs/toolkit";
 
 import { saveSpeed, saveTheme } from "@/lib/storage";
-
-import { setSpeed } from "@/store/runnerSlice";
-import type { AppDispatch, RootState } from "@/store/store";
-import { selectTheme, toggleTheme } from "@/store/themeSlice";
+import { setSpeed } from "@/redux/reducers/runner";
+import { selectTheme, toggleTheme } from "@/redux/reducers/theme";
+import type { AppDispatch, RootState } from "@/redux/store";
 
 export const listener = createListenerMiddleware();
 

@@ -6,9 +6,8 @@ import { Button } from "@/components/ui/button";
 
 import { defaultMachine, examples } from "@/lib/examples";
 import { getMachine, saveMachine } from "@/lib/storage";
-
-import { useAppSelector } from "@/store/hooks";
-import { selectSavedMachine } from "@/store/selectors";
+import { selectSavedMachine } from "@/redux/selectors";
+import { useAppSelector } from "@/redux/store";
 
 export function SaveButton() {
   const navigate = useNavigate();

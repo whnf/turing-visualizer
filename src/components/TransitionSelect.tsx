@@ -10,8 +10,6 @@ import {
 } from "@/components/ui/select";
 
 import { Move } from "@/lib/machine";
-
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   selectMove,
   selectNextPhase,
@@ -19,7 +17,8 @@ import {
   selectPhases,
   selectTokens,
   setTransition,
-} from "@/store/tableSlice";
+} from "@/redux/reducers/table";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 
 function TransitionSelect({
   phaseId,

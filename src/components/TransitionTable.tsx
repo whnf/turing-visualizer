@@ -5,8 +5,8 @@ import {
   NextTokenSelect,
 } from "@/components/TransitionSelect";
 
-import { useAppSelector } from "@/store/hooks";
-import { selectPhases, selectTokens } from "@/store/tableSlice";
+import { selectPhases, selectTokens } from "@/redux/reducers/table";
+import { useAppSelector } from "@/redux/store";
 
 export function TransitionTable() {
   const phases = useAppSelector(selectPhases);

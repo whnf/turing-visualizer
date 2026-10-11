@@ -1,8 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 import { loadSpeed } from "@/lib/storage";
-
-import { loadMachine } from "@/store/actions";
+import { loadMachine } from "@/redux/actions";
 
 export const SPEEDS = [1, 2, 4, 8];
 

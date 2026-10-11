@@ -11,8 +11,6 @@ import { ButtonGroup } from "@/components/ui/button-group";
 import { Slider } from "@/components/ui/slider";
 
 import { useRunLoop } from "@/hooks/useRunLoop";
-
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   pause,
   run,
@@ -20,15 +18,16 @@ import {
   selectSpeed,
   setSpeed,
   SPEEDS,
-} from "@/store/runnerSlice";
-import { selectCurrentTransition } from "@/store/selectors";
+} from "@/redux/reducers/runner";
 import {
   back,
   reset,
   selectStarted,
   selectStepCount,
   step,
-} from "@/store/tapeSlice";
+} from "@/redux/reducers/tape";
+import { selectCurrentTransition } from "@/redux/selectors";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 
 export function Controls() {
   const transition = useAppSelector(selectCurrentTransition);

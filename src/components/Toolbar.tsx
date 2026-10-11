@@ -7,14 +7,14 @@ import { Input } from "@/components/ui/input";
 import { SaveButton } from "@/components/SaveButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   selectDescription,
   selectTitle,
   setDescription,
   setTitle,
-} from "@/store/metaSlice";
-import { selectPhaseCount, selectTokenCount } from "@/store/tableSlice";
+} from "@/redux/reducers/meta";
+import { selectPhaseCount, selectTokenCount } from "@/redux/reducers/table";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 
 export function Toolbar() {
   const dispatch = useAppDispatch();

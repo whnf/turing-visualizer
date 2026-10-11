@@ -2,8 +2,8 @@ import { SquareDot } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 
-import { useAppSelector } from "@/store/hooks";
-import { selectStarted } from "@/store/tapeSlice";
+import { selectStarted } from "@/redux/reducers/tape";
+import { useAppSelector } from "@/redux/store";
 
 export function TapeEditHint() {
   const started = useAppSelector(selectStarted);

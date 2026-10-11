@@ -2,8 +2,8 @@ import { Trash } from "lucide-react";
 
 import { InputGroupButton } from "@/components/ui/input-group";
 
-import { useAppDispatch } from "@/store/hooks";
-import { removePhase, removeToken } from "@/store/tableSlice";
+import { removePhase, removeToken } from "@/redux/reducers/table";
+import { useAppDispatch } from "@/redux/store";
 
 function DeleteButton({
   id,

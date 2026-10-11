@@ -20,9 +20,8 @@ import { TransitionTable } from "@/components/TransitionTable";
 
 import { defaultMachine, examples } from "@/lib/examples";
 import { getMachine } from "@/lib/storage";
-
-import { loadMachine } from "@/store/actions";
-import { store } from "@/store/store";
+import { loadMachine } from "@/redux/actions";
+import { store } from "@/redux/store";
 
 function Machine() {
   return (

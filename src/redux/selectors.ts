@@ -1,16 +1,15 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import type { SavedMachine } from "@/lib/machine";
-
-import type { RootState } from "@/store/store";
 import {
   selectPhaseById,
   selectPhases,
   selectTokens,
   selectTransition,
   selectTransitions,
-} from "@/store/tableSlice";
-import { selectPhaseId, selectTokenId } from "@/store/tapeSlice";
+} from "@/redux/reducers/table";
+import { selectPhaseId, selectTokenId } from "@/redux/reducers/tape";
+import type { RootState } from "@/redux/store";
 
 export const selectInput = (state: RootState) =>
   state.tape.past[0] ?? state.tape.present;

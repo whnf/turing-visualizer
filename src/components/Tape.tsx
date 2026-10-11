@@ -2,15 +2,14 @@ import { cn } from "cn";
 import { ArrowDown, ArrowUp } from "lucide-react";
 
 import { BLANK } from "@/lib/machine";
-
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { selectTokenById, selectTokens } from "@/store/tableSlice";
+import { selectTokenById, selectTokens } from "@/redux/reducers/table";
 import {
   moveHead,
   selectPresent,
   selectStarted,
   writeInput,
-} from "@/store/tapeSlice";
+} from "@/redux/reducers/tape";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 
 const CELL = 60;
 const PITCH = CELL + 8;

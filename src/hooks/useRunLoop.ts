@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
-import { useAppDispatch, useAppSelector, useAppStore } from "@/store/hooks";
-import { pause, selectRunning, selectSpeed } from "@/store/runnerSlice";
-import { selectCurrentTransition } from "@/store/selectors";
-import { selectPresent, step } from "@/store/tapeSlice";
+import { pause, selectRunning, selectSpeed } from "@/redux/reducers/runner";
+import { selectPresent, step } from "@/redux/reducers/tape";
+import { selectCurrentTransition } from "@/redux/selectors";
+import { useAppDispatch, useAppSelector, useAppStore } from "@/redux/store";
 
 export const useRunLoop = () => {
   const dispatch = useAppDispatch();

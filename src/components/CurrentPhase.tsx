@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 
-import { useAppSelector } from "@/store/hooks";
-import { selectCurrentPhase } from "@/store/selectors";
+import { selectCurrentPhase } from "@/redux/selectors";
+import { useAppSelector } from "@/redux/store";
 
 export function CurrentPhase() {
   const phase = useAppSelector(selectCurrentPhase);

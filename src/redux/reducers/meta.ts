@@ -1,8 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 import { defaultMachine } from "@/lib/examples";
-
-import { loadMachine } from "@/store/actions";
+import { loadMachine } from "@/redux/actions";
 
 type MetaState = {
   id: string;

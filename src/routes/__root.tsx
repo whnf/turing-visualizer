@@ -2,9 +2,8 @@ import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 import { loadTheme } from "@/lib/storage";
-
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { selectTheme, setSystemTheme } from "@/store/themeSlice";
+import { selectTheme, setSystemTheme } from "@/redux/reducers/theme";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 
 function RootLayout() {
   const dispatch = useAppDispatch();

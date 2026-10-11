@@ -8,9 +8,8 @@ import {
 import { DeletePhase, DeleteToken } from "@/components/DeleteButton";
 
 import { BLANK, Q0, type Phase, type Token } from "@/lib/machine";
-
-import { useAppDispatch } from "@/store/hooks";
-import { renamePhase, renameToken } from "@/store/tableSlice";
+import { renamePhase, renameToken } from "@/redux/reducers/table";
+import { useAppDispatch } from "@/redux/store";
 
 function NameInput({
   entity,

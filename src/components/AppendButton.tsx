@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 
-import { useAppDispatch } from "@/store/hooks";
-import { addPhase, addToken } from "@/store/tableSlice";
+import { addPhase, addToken } from "@/redux/reducers/table";
+import { useAppDispatch } from "@/redux/store";
 
 function AppendButton({
   appendAction,

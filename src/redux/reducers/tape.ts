@@ -2,9 +2,8 @@ import { createSlice, current, type PayloadAction } from "@reduxjs/toolkit";
 
 import { defaultMachine } from "@/lib/examples";
 import { BLANK, Move, Q0, type Transition } from "@/lib/machine";
-
-import { loadMachine } from "@/store/actions";
-import { removeToken } from "@/store/tableSlice";
+import { loadMachine } from "@/redux/actions";
+import { removeToken } from "@/redux/reducers/table";
 
 export type Run = {
   cells: Record<number, string>;

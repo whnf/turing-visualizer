@@ -7,8 +7,6 @@ import { router } from "@/router";
 
 import { store } from "@/redux/store";
 
-import "@/index.css";
-
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <StoreProvider store={store}>

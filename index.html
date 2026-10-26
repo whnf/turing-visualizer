@@ -9,6 +9,16 @@
       content="An interactive visualizer for deterministic single-tape Turing machines. Define states, symbols and transitions, then step through the run."
     />
     <title>Turing Visualizer</title>
+    <link rel="stylesheet" href="/src/index.css" />
+    <script>
+      const theme = JSON.parse(localStorage.getItem("turing-visualizer:theme"));
+      document.documentElement.classList.toggle(
+        "dark",
+        theme === "dark" ||
+          (theme === null &&
+            matchMedia("(prefers-color-scheme: dark)").matches),
+      );
+    </script>
   </head>
   <body>
     <div id="root"></div>

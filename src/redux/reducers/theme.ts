@@ -1,17 +1,13 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import { loadTheme, type Theme } from "@/lib/storage";
+import type { Theme } from "@/lib/storage";
 
 type ThemeState = {
   theme: Theme;
 };
 
 const initialState: ThemeState = {
-  theme:
-    loadTheme() ??
-    (window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light"),
+  theme: document.documentElement.classList.contains("dark") ? "dark" : "light",
 };
 
 const themeSlice = createSlice({

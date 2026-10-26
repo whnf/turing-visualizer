@@ -1,6 +1,8 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { useEffect } from "react";
 
+import { Footer } from "@/components/Footer";
+
 import { loadTheme } from "@/lib/storage";
 
 import { selectTheme, setSystemTheme } from "@/redux/reducers/theme";
@@ -29,9 +31,12 @@ function RootLayout() {
   }, [dispatch]);
 
   return (
-    <main className="flex flex-col items-center">
-      <Outlet />
-    </main>
+    <div className="flex min-h-svh flex-col items-center">
+      <main className="flex w-full flex-1 flex-col items-center">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
   );
 }
 
